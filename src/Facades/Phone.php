@@ -2,7 +2,7 @@
 
 namespace Helldar\SpammersServer\Facades;
 
-use Helldar\SpammersServer\Services\Local\PhoneService;
+use Helldar\SpammersServer\Services\PhoneService;
 use Illuminate\Support\Facades\Facade;
 
 class Phone extends Facade

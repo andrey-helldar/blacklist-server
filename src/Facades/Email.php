@@ -2,7 +2,7 @@
 
 namespace Helldar\SpammersServer\Facades;
 
-use Helldar\SpammersServer\Services\Local\EmailService;
+use Helldar\SpammersServer\Services\EmailService;
 use Illuminate\Support\Facades\Facade;
 
 class Email extends Facade
