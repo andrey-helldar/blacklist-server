@@ -4,10 +4,13 @@ namespace Helldar\SpammersServer\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use function config;
 
 abstract class BaseModel extends Model
 {
+    use SoftDeletes;
+
     public $incrementing = false;
 
     protected $primaryKey = 'string';
