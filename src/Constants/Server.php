@@ -33,6 +33,6 @@ class Server
             throw new UnknownServerTypeException($type);
         }
 
-        return Str::title($type);
+        return $type;
     }
 }
