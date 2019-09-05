@@ -9,11 +9,17 @@ use Helldar\SpammersServer\Facades\Host;
 use Helldar\SpammersServer\Facades\Ip;
 use Helldar\SpammersServer\Facades\Phone;
 use Helldar\SpammersServer\Http\Requests\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller;
 use function api_response;
 use function array_key_exists;
 
-class IndexController
+
+class IndexController extends Controller
 {
+    use AuthorizesRequests, ValidatesRequests;
+
     private $services = [
         'email' => Email::class,
         'host'  => Host::class,
