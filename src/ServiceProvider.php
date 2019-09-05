@@ -2,6 +2,8 @@
 
 namespace Helldar\SpammersServer;
 
+use function config_path;
+
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     protected $defer = false;
@@ -9,7 +11,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/settings.php' => \config_path('spammers_server.php'),
+            __DIR__ . '/config/settings.php' => config_path('spammers_server.php'),
         ], 'config');
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');

@@ -3,13 +3,14 @@
 namespace Helldar\SpammersServer\Services;
 
 use Helldar\SpammersServer\Models\Email;
+use function compact;
 
 class EmailService extends BaseService
 {
     public function store(string $source)
     {
         if (!$this->exists($source, true)) {
-            return Email::create(\compact('source'));
+            return Email::create(compact('source'));
         }
         $item = Email::query()
             ->withTrashed()

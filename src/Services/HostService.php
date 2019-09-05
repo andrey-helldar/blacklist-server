@@ -4,13 +4,14 @@ namespace Helldar\SpammersServer\Services\Local;
 
 use Helldar\SpammersServer\Models\Host;
 use Helldar\SpammersServer\Services\BaseService;
+use function compact;
 
 class HostService extends BaseService
 {
     public function store(string $source)
     {
         if (!$this->exists($source, true)) {
-            return Host::create(\compact('source'));
+            return Host::create(compact('source'));
         }
 
         $item = Host::query()
