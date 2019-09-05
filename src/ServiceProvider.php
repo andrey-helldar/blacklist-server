@@ -2,6 +2,8 @@
 
 namespace Helldar\SpammersServer;
 
+use Helldar\SpammersServer\Console\Delete;
+use function config;
 use function config_path;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -16,7 +18,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
-        $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
+        if (config('spammers_server.use_routes', true)) {
+            $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Delete::class,
+            ]);
+        }
     }
 
     public function register()

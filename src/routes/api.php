@@ -8,6 +8,6 @@ Route::prefix('api/spammer')
     ->group(function () {
 
         Route::post('store', 'Helldar\SpammersServer\Http\Controllers\IndexController@store')->name('store');
-        Route::post('exists', 'Helldar\SpammersServer\Http\Controllers\IndexController@exists')->name('exists');
+        Route::get('exists', 'Helldar\SpammersServer\Http\Controllers\IndexController@exists')->name('exists');
 
     });

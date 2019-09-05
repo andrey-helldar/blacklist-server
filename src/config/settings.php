@@ -2,6 +2,12 @@
 
 return [
 
+    /*
+     * Default, true
+     */
+
+    'use_routes' => true,
+
     'connection' => env('DB_CONNECTION', 'mysql'),
 
     /*
