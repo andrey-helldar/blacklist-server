@@ -6,6 +6,8 @@ return [
      * Server is type.
      *
      * Available: "local", "remote".
+     *
+     * Default, "remote".
      */
 
     'type' => 'remote',
