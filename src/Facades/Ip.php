@@ -3,10 +3,12 @@
 namespace Helldar\SpammersServer\Facades;
 
 use Helldar\SpammersServer\Services\Local\IpService;
+use Illuminate\Support\Facades\Facade;
 
-class Ip extends BaseFacade
+class Ip extends Facade
 {
-    protected static $services = [
-        'local' => IpService::class,
-    ];
+    protected static function getFacadeAccessor()
+    {
+        return IpService::class;
+    }
 }

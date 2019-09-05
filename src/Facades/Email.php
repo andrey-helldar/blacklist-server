@@ -3,10 +3,12 @@
 namespace Helldar\SpammersServer\Facades;
 
 use Helldar\SpammersServer\Services\Local\EmailService;
+use Illuminate\Support\Facades\Facade;
 
-class Email extends BaseFacade
+class Email extends Facade
 {
-    protected static $services = [
-        'local' => EmailService::class,
-    ];
+    protected static function getFacadeAccessor()
+    {
+        return EmailService::class;
+    }
 }

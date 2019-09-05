@@ -2,16 +2,6 @@
 
 return [
 
-    /*
-     * Server is type.
-     *
-     * Available: "local", "remote".
-     *
-     * Default, "remote".
-     */
-
-    'type' => 'remote',
-
     'connection' => env('DB_CONNECTION', 'mysql'),
 
     /*

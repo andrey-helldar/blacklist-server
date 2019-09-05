@@ -4,6 +4,7 @@ namespace Helldar\SpammersServer\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use function config;
 
 abstract class BaseModel extends Model
 {
@@ -21,7 +22,7 @@ abstract class BaseModel extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->setConnection(\config('spammers_server.connection', 'mysql'));
+        $this->setConnection(config('spammers_server.connection', 'mysql'));
 
         parent::__construct($attributes);
     }
