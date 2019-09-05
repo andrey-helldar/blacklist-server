@@ -28,6 +28,8 @@ class CreateSpammersTables extends Migration
                 $table->{$type}('source')->unique()->primary();
 
                 $table->unsignedInteger('ttl')->default($this->ttl);
+
+                $table->timestamp('expired_at');
                 $table->timestamps();
                 $table->softDeletes();
             });
