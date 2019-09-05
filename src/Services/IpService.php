@@ -1,9 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services\Local;
+namespace Helldar\SpammersServer\Services;
 
 use Helldar\SpammersServer\Models\Ip;
-use Helldar\SpammersServer\Services\BaseService;
 use function compact;
 
 class IpService extends BaseService

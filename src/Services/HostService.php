@@ -1,9 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services\Local;
+namespace Helldar\SpammersServer\Services;
 
 use Helldar\SpammersServer\Models\Host;
-use Helldar\SpammersServer\Services\BaseService;
 use function compact;
 
 class HostService extends BaseService

@@ -1,9 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services\Local;
+namespace Helldar\SpammersServer\Services;
 
 use Helldar\SpammersServer\Models\Phone;
-use Helldar\SpammersServer\Services\BaseService;
 use function compact;
 
 class PhoneService extends BaseService
