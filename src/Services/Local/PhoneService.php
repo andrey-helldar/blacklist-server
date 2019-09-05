@@ -3,10 +3,11 @@
 namespace Helldar\SpammersServer\Services\Local;
 
 use Helldar\SpammersServer\Models\Phone;
+use Helldar\SpammersServer\Services\BaseService;
 
 class PhoneService extends BaseService
 {
-    public function store(string $source): Phone
+    public function store(string $source)
     {
         if (!$this->exists($source, true)) {
             return Phone::create(\compact('source'));

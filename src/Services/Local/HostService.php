@@ -3,10 +3,11 @@
 namespace Helldar\SpammersServer\Services\Local;
 
 use Helldar\SpammersServer\Models\Host;
+use Helldar\SpammersServer\Services\BaseService;
 
 class HostService extends BaseService
 {
-    public function store(string $source): Host
+    public function store(string $source)
     {
         if (!$this->exists($source, true)) {
             return Host::create(\compact('source'));

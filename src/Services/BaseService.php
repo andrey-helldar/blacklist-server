@@ -1,10 +1,11 @@
 <?php
 
-namespace Helldar\SpammersServer\Services\Local;
+namespace Helldar\SpammersServer\Services;
 
+use Helldar\SpammersServer\Contracts\Service;
 use function config;
 
-abstract class BaseService
+abstract class BaseService implements Service
 {
     protected $ttl_multiplier;
 

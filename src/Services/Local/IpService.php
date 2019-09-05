@@ -3,10 +3,11 @@
 namespace Helldar\SpammersServer\Services\Local;
 
 use Helldar\SpammersServer\Models\Ip;
+use Helldar\SpammersServer\Services\BaseService;
 
 class IpService extends BaseService
 {
-    public function store(string $source): Ip
+    public function store(string $source)
     {
         if (!$this->exists($source, true)) {
             return Ip::create(\compact('source'));

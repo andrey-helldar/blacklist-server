@@ -3,10 +3,11 @@
 namespace Helldar\SpammersServer\Services\Local;
 
 use Helldar\SpammersServer\Models\Email;
+use Helldar\SpammersServer\Services\BaseService;
 
 class EmailService extends BaseService
 {
-    public function store(string $source): Email
+    public function store(string $source)
     {
         if (!$this->exists($source, true)) {
             return Email::create(\compact('source'));
