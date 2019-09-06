@@ -3,7 +3,7 @@
     "description": "A spammers server package",
     "type": "library",
     "license": "MIT",
-    "keywords": ["spam", "spammer", "laravel", "black list"],
+    "keywords": ["spam", "spammer", "spammers", "antispam", "anti-spam", "laravel", "blacklist"],
     "support": {
         "issues": "https://github.com/andrey-helldar/spammers-server/issues",
         "source": "https://github.com/andrey-helldar/spammers-server"
