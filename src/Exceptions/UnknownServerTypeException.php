@@ -12,6 +12,6 @@ class UnknownServerTypeException extends Exception
     {
         $message = sprintf('The server must be one of the types: %s, "%s" given.', Rules::keysDivided(' or '), $type);
 
-        parent::__construct($message, 500);
+        parent::__construct($message, 400);
     }
 }

@@ -17,12 +17,24 @@ class Delete extends Command
 
     public function handle()
     {
-        Email::where('expired_at', '<=', Carbon::now())->delete();
+        $models = [
+            Email::class,
+            Host::class,
+            Ip::class,
+            Phone::class,
+        ];
 
-        Host::where('expired_at', '<=', Carbon::now())->delete();
+        foreach ($models as $model) {
+            $this->delete($model);
+        }
+    }
 
-        Ip::where('expired_at', '<=', Carbon::now())->delete();
-
-        Phone::where('expired_at', '<=', Carbon::now())->delete();
+    /**
+     * @param string|\Illuminate\Database\Eloquent\Model $model
+     */
+    private function delete(string $model)
+    {
+        $model::where('expired_at', '<=', Carbon::now())
+            ->delete();
     }
 }

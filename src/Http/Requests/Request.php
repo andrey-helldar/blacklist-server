@@ -19,8 +19,13 @@ class Request extends FormRequest
         $type = $this->get('type');
 
         return [
-            'type'   => ['required', 'string', Rule::in(Rules::keys())],
+            'type'   => ['required', 'string', Rule::in(Rules::keysBasename())],
             'source' => Arr::get(Rules::get($type), $type, Rules::DEFAULT),
         ];
+    }
+
+    public function messages()
+    {
+        return Rules::MESSAGES;
     }
 }

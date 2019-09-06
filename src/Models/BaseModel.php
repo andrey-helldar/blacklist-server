@@ -13,7 +13,9 @@ abstract class BaseModel extends Model
 
     public $incrementing = false;
 
-    protected $primaryKey = 'string';
+    protected $primaryKey = 'source';
+
+    protected $keyType = 'string';
 
     protected $fillable = ['source', 'ttl', 'expired_at', 'deleted_at'];
 
@@ -22,6 +24,8 @@ abstract class BaseModel extends Model
     protected $casts = [
         'ttl' => 'integer',
     ];
+
+    protected $hidden = ['ttl', 'deleted_at'];
 
     public function __construct(array $attributes = [])
     {

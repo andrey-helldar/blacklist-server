@@ -3,43 +3,53 @@
 namespace Helldar\SpammersServer\Services;
 
 use Helldar\SpammersServer\Models\Phone;
-use function compact;
+use Illuminate\Support\Str;
+use function preg_replace;
+use function str_ireplace;
 
 class PhoneService extends BaseService
 {
-    public function store(string $source)
+    protected $model = Phone::class;
+
+    public function store(string $source = null)
     {
-        if (!$this->exists($source, true)) {
-            return Phone::create(compact('source'));
-        }
-
-        $item = Phone::query()
-            ->withTrashed()
-            ->findOrFail($source);
-
-        $item->update([
-            'ttl'        => $item->ttl * $this->ttl_multiplier,
-            'deleted_at' => null,
-        ]);
-
-        return $item;
+        return parent::store($this->clear($source));
     }
 
-    public function delete(string $source): int
+    public function delete(string $source = null): int
     {
-        return Phone::query()
-            ->where('source', $source)
-            ->delete();
+        return parent::delete($this->clear($source));
     }
 
-    public function exists(string $source, bool $with_trashed = false): bool
+    public function exists(string $source = null, bool $with_trashed = false): bool
     {
-        $query = Phone::where('source', $source);
+        return parent::exists($this->clear($source), $with_trashed);
+    }
 
-        if ($with_trashed) {
-            $query->withTrashed();
+    protected function clear(string $phone = null): string
+    {
+        $phone = $this->convertWords($phone);
+
+        return (string) preg_replace("/\D/", '', $phone);
+    }
+
+    private function convertWords(string $phone = null): string
+    {
+        $phone   = Str::lower($phone);
+        $replace = [
+            '2' => ['a', 'b', 'c'],
+            '3' => ['d', 'e', 'f'],
+            '4' => ['g', 'h', 'i'],
+            '5' => ['j', 'k', 'l'],
+            '6' => ['m', 'n', 'o'],
+            '7' => ['p', 'q', 'r', 's'],
+            '8' => ['t', 'u', 'v'],
+            '9' => ['w', 'x', 'y', 'z'],
+        ];
+        foreach ($replace as $digit => $letters) {
+            $phone = str_ireplace($letters, $digit, $phone);
         }
 
-        return $query->exists();
+        return (string) $phone;
     }
 }

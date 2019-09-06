@@ -18,6 +18,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
+        $this->loadTranslationsFrom(__DIR__ . './resources/lang', 'spammers_server');
+
         if (config('spammers_server.use_routes', true)) {
             $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
         }

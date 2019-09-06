@@ -22,7 +22,7 @@ class RulesTest extends TestCase
 
     public function testKeys()
     {
-        $this->assertEquals(['email', 'host', 'phone', 'ip'], Rules::keys());
+        $this->assertEquals(['email', 'host', 'phone', 'ip'], Rules::keysBasename());
     }
 
     public function testKeysDivided()

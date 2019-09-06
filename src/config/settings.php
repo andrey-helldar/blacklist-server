@@ -3,10 +3,12 @@
 return [
 
     /*
-     * Default, true
+     * Default, true.
      */
 
     'use_routes' => true,
+
+    'friendly' => true,
 
     'connection' => env('DB_CONNECTION', 'mysql'),
 
@@ -15,6 +17,10 @@ return [
      */
 
     'ttl' => 7,
+
+    /*
+     * Default, 3.
+     */
 
     'ttl_multiplier' => 3,
 
