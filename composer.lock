@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0910357928b07f8ffe6745018da229e8",
+    "content-hash": "79dfadce350b47ccf16b8d7642dad2b5",
     "packages": [
         {
             "name": "andrey-helldar/api-response",
@@ -4453,7 +4453,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
