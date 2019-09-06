@@ -2,7 +2,7 @@
 
 namespace Tests\Routes;
 
-use Helldar\SpammersServer\Facades\Phone;
+use Helldar\BlacklistServer\Facades\Phone;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -18,7 +18,7 @@ class PhoneTest extends TestCase
     {
         Phone::store($this->correct);
 
-        $result = $this->call('POST', 'api/spammer', [
+        $result = $this->call('POST', 'api/blacklist', [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
@@ -35,7 +35,7 @@ class PhoneTest extends TestCase
 
         Phone::store($this->foo);
 
-        $this->call('POST', 'api/spammer', [
+        $this->call('POST', 'api/blacklist', [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
@@ -43,7 +43,7 @@ class PhoneTest extends TestCase
 
     public function testStoreFailSourceMessage()
     {
-        $result = $this->call('POST', 'api/spammer', [
+        $result = $this->call('POST', 'api/blacklist', [
             'type'   => 'phone',
             'source' => $this->foo,
         ]);
@@ -59,7 +59,7 @@ class PhoneTest extends TestCase
 
     public function testStoreFailEmptySource()
     {
-        $result = $this->call('POST', 'api/spammer', [
+        $result = $this->call('POST', 'api/blacklist', [
             'type' => 'phone',
         ]);
 
@@ -72,7 +72,7 @@ class PhoneTest extends TestCase
     {
         Phone::store($this->correct);
 
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
@@ -89,7 +89,7 @@ class PhoneTest extends TestCase
     {
         Phone::store($this->correct);
 
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'phone',
             'source' => '192.100.100.100',
         ]);
@@ -105,7 +105,7 @@ class PhoneTest extends TestCase
 
         Phone::store($this->foo);
 
-        $this->call('GET', 'api/spammer', [
+        $this->call('GET', 'api/blacklist', [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
@@ -113,7 +113,7 @@ class PhoneTest extends TestCase
 
     public function testCheckFailSourceMessage()
     {
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'phone',
             'source' => $this->foo,
         ]);
@@ -125,7 +125,7 @@ class PhoneTest extends TestCase
 
     public function testCheckFailEmptySource()
     {
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type' => 'phone',
         ]);
 

@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::namespace('\Helldar\SpammersServer\Http\Controllers')
-    ->prefix('api/spammer')
+Route::namespace('\Helldar\BlacklistServer\Http\Controllers')
+    ->prefix('api/blacklist')
     ->middleware('api')
-    ->name('api.spammer.')
+    ->name('api.blacklist.')
     ->group(function () {
 
         Route::post('/', 'IndexController@store')->name('store');

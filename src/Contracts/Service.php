@@ -1,6 +1,6 @@
 <?php
 
-namespace Helldar\SpammersServer\Contracts;
+namespace Helldar\BlacklistServer\Contracts;
 
 interface Service
 {

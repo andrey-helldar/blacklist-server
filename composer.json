@@ -1,12 +1,12 @@
 {
-    "name": "andrey-helldar/spammers-server",
-    "description": "A spammers server package",
+    "name": "andrey-helldar/blacklist-server",
+    "description": "The blacklist server package",
     "type": "library",
     "license": "MIT",
-    "keywords": ["spam", "spammer", "spammers", "antispam", "anti-spam", "laravel", "blacklist"],
+    "keywords": ["spam", "blacklist", "blacklist", "antispam", "anti-spam", "laravel", "blacklist"],
     "support": {
-        "issues": "https://github.com/andrey-helldar/spammers-server/issues",
-        "source": "https://github.com/andrey-helldar/spammers-server"
+        "issues": "https://github.com/andrey-helldar/blacklist-server/issues",
+        "source": "https://github.com/andrey-helldar/blacklist-server"
     },
     "authors": [
         {
@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Helldar\\SpammersServer\\": "src/"
+            "Helldar\\BlacklistServer\\": "src/"
         }
     },
     "autoload-dev": {
@@ -48,7 +48,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Helldar\\SpammersServer\\ServiceProvider"
+                "Helldar\\BlacklistServer\\ServiceProvider"
             ]
         }
     }

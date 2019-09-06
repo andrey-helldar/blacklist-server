@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpammersTables extends Migration
+class CreateBlacklistTables extends Migration
 {
     private $tables = [
-        'spammers_ips'    => 'ipAddress',
-        'spammers_emails' => 'string',
-        'spammers_hosts'  => 'string',
-        'spammers_phones' => 'string',
+        'blacklist_ips'    => 'ipAddress',
+        'blacklist_emails' => 'string',
+        'blacklist_hosts'  => 'string',
+        'blacklist_phones' => 'string',
     ];
 
     private $ttl;
 
     public function __construct()
     {
-        $this->ttl = (int) config('spammers_server.ttl', 7);
+        $this->ttl = (int) config('blacklist_server.ttl', 7);
     }
 
     public function up()

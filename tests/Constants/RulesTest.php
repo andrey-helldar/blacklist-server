@@ -2,7 +2,7 @@
 
 namespace Tests\Constants;
 
-use Helldar\SpammersServer\Constants\Rules;
+use Helldar\BlacklistServer\Constants\Rules;
 use Tests\TestCase;
 
 class RulesTest extends TestCase

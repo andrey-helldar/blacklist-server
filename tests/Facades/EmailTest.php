@@ -3,9 +3,9 @@
 namespace Tests\Facades;
 
 use Exception;
-use Helldar\SpammersServer\Facades\Email;
-use Helldar\SpammersServer\Facades\Helpers\Validator;
-use Helldar\SpammersServer\Models\Email as EmailModel;
+use Helldar\BlacklistServer\Facades\Email;
+use Helldar\BlacklistServer\Facades\Helpers\Validator;
+use Helldar\BlacklistServer\Models\Email as EmailModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
@@ -123,7 +123,7 @@ class EmailTest extends TestCase
         Email::exists($this->foo);
     }
 
-    public function testExistsSpammerDetected()
+    public function testExistsBlacklistDetected()
     {
         Email::store($this->correct);
 

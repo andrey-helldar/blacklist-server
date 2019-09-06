@@ -2,7 +2,7 @@
 
 namespace Tests\Routes;
 
-use Helldar\SpammersServer\Facades\Ip;
+use Helldar\BlacklistServer\Facades\Ip;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -18,7 +18,7 @@ class IpTest extends TestCase
     {
         Ip::store($this->correct);
 
-        $result = $this->call('POST', 'api/spammer', [
+        $result = $this->call('POST', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->correct,
         ]);
@@ -35,7 +35,7 @@ class IpTest extends TestCase
 
         Ip::store($this->foo);
 
-        $this->call('POST', 'api/spammer', [
+        $this->call('POST', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->correct,
         ]);
@@ -43,7 +43,7 @@ class IpTest extends TestCase
 
     public function testStoreFailSourceMessage()
     {
-        $result = $this->call('POST', 'api/spammer', [
+        $result = $this->call('POST', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->foo,
         ]);
@@ -59,7 +59,7 @@ class IpTest extends TestCase
 
     public function testStoreFailEmptySource()
     {
-        $result = $this->call('POST', 'api/spammer', [
+        $result = $this->call('POST', 'api/blacklist', [
             'type' => 'ip',
         ]);
 
@@ -72,7 +72,7 @@ class IpTest extends TestCase
     {
         Ip::store($this->correct);
 
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->correct,
         ]);
@@ -89,7 +89,7 @@ class IpTest extends TestCase
     {
         Ip::store($this->correct);
 
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'ip',
             'source' => '192.100.100.100',
         ]);
@@ -102,7 +102,7 @@ class IpTest extends TestCase
     {
         Ip::store($this->correct);
 
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->incorrect,
         ]);
@@ -119,7 +119,7 @@ class IpTest extends TestCase
 
         Ip::store($this->foo);
 
-        $this->call('GET', 'api/spammer', [
+        $this->call('GET', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->correct,
         ]);
@@ -127,7 +127,7 @@ class IpTest extends TestCase
 
     public function testCheckFailSourceMessage()
     {
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type'   => 'ip',
             'source' => $this->foo,
         ]);
@@ -139,7 +139,7 @@ class IpTest extends TestCase
 
     public function testCheckFailEmptySource()
     {
-        $result = $this->call('GET', 'api/spammer', [
+        $result = $this->call('GET', 'api/blacklist', [
             'type' => 'ip',
         ]);
 

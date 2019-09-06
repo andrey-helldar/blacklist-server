@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer;
+namespace Helldar\BlacklistServer;
 
-use Helldar\SpammersServer\Console\Delete;
+use Helldar\BlacklistServer\Console\Delete;
 use function config;
 use function config_path;
 
@@ -13,14 +13,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/settings.php' => config_path('spammers_server.php'),
+            __DIR__ . '/config/settings.php' => config_path('blacklist_server.php'),
         ], 'config');
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__ . './resources/lang', 'spammers_server');
+        $this->loadTranslationsFrom(__DIR__ . './resources/lang', 'blacklist_server');
 
-        if (config('spammers_server.use_routes', true)) {
+        if (config('blacklist_server.use_routes', true)) {
             $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
         }
 
@@ -33,6 +33,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/settings.php', 'spammers_server');
+        $this->mergeConfigFrom(__DIR__ . '/config/settings.php', 'blacklist_server');
     }
 }

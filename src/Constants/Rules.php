@@ -1,11 +1,11 @@
 <?php
 
-namespace Helldar\SpammersServer\Constants;
+namespace Helldar\BlacklistServer\Constants;
 
-use Helldar\SpammersServer\Models\Email;
-use Helldar\SpammersServer\Models\Host;
-use Helldar\SpammersServer\Models\Ip;
-use Helldar\SpammersServer\Models\Phone;
+use Helldar\BlacklistServer\Models\Email;
+use Helldar\BlacklistServer\Models\Host;
+use Helldar\BlacklistServer\Models\Ip;
+use Helldar\BlacklistServer\Models\Phone;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use function array_keys;

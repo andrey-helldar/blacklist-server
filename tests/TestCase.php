@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Helldar\SpammersServer\ServiceProvider;
+use Helldar\BlacklistServer\ServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -38,12 +38,12 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             'prefix'   => '',
         ]);
 
-        $app['config']->set('spammers_server.connection', $this->database);
+        $app['config']->set('blacklist_server.connection', $this->database);
     }
 
     private function setRoutes($app)
     {
-        $app['router']->post('api/spammer/store', 'Helldar\SpammersServer\Http\Controllers\IndexController@store');
-        $app['router']->get('api/spammer/exists', 'Helldar\SpammersServer\Http\Controllers\IndexController@exists');
+        $app['router']->post('api/blacklist', 'Helldar\BlacklistServer\Http\Controllers\IndexController@store');
+        $app['router']->get('api/blacklist', 'Helldar\BlacklistServer\Http\Controllers\IndexController@check');
     }
 }

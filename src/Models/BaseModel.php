@@ -1,6 +1,6 @@
 <?php
 
-namespace Helldar\SpammersServer\Models;
+namespace Helldar\BlacklistServer\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +29,7 @@ abstract class BaseModel extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->setConnection(config('spammers_server.connection', 'mysql'));
+        $this->setConnection(config('blacklist_server.connection', 'mysql'));
 
         parent::__construct($attributes);
     }

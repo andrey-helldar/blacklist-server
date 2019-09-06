@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services;
+namespace Helldar\BlacklistServer\Services;
 
-use Helldar\SpammersServer\Models\Ip;
+use Helldar\BlacklistServer\Models\Ip;
 
 class IpService extends BaseService
 {

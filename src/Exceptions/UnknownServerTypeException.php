@@ -1,9 +1,9 @@
 <?php
 
-namespace Helldar\SpammersServer\Exceptions;
+namespace Helldar\BlacklistServer\Exceptions;
 
 use Exception;
-use Helldar\SpammersServer\Constants\Rules;
+use Helldar\BlacklistServer\Constants\Rules;
 use function sprintf;
 
 class UnknownServerTypeException extends Exception

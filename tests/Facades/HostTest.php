@@ -3,9 +3,9 @@
 namespace Tests\Facades;
 
 use Exception;
-use Helldar\SpammersServer\Facades\Helpers\Validator;
-use Helldar\SpammersServer\Facades\Host;
-use Helldar\SpammersServer\Models\Host as HostModel;
+use Helldar\BlacklistServer\Facades\Helpers\Validator;
+use Helldar\BlacklistServer\Facades\Host;
+use Helldar\BlacklistServer\Models\Host as HostModel;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -121,7 +121,7 @@ class HostTest extends TestCase
         Host::exists($this->foo);
     }
 
-    public function testExistsSpammerDetected()
+    public function testExistsBlacklistDetected()
     {
         Host::store($this->correct);
 

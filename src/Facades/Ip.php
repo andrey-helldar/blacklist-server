@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Facades;
+namespace Helldar\BlacklistServer\Facades;
 
-use Helldar\SpammersServer\Services\IpService;
+use Helldar\BlacklistServer\Services\IpService;
 use Illuminate\Support\Facades\Facade;
 
 class Ip extends Facade

@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Facades\Helpers;
+namespace Helldar\BlacklistServer\Facades\Helpers;
 
-use Helldar\SpammersServer\Helpers\ValidationHelper;
+use Helldar\BlacklistServer\Helpers\ValidationHelper;
 use Illuminate\Support\Facades\Facade;
 
 class Validator extends Facade

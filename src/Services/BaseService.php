@@ -1,10 +1,10 @@
 <?php
 
-namespace Helldar\SpammersServer\Services;
+namespace Helldar\BlacklistServer\Services;
 
-use Helldar\SpammersServer\Contracts\Service;
-use Helldar\SpammersServer\Exceptions\SpammerDetectedException;
-use Helldar\SpammersServer\Facades\Helpers\Validator;
+use Helldar\BlacklistServer\Contracts\Service;
+use Helldar\BlacklistServer\Exceptions\BlacklistDetectedException;
+use Helldar\BlacklistServer\Facades\Helpers\Validator;
 use function class_basename;
 use function config;
 
@@ -19,9 +19,9 @@ abstract class BaseService implements Service
 
     public function __construct()
     {
-        $this->ttl = (int) config('spammers_server.ttl', 7);
+        $this->ttl = (int) config('blacklist_server.ttl', 7);
 
-        $this->ttl_multiplier = (int) config('spammers_server.ttl_multiplier', 3);
+        $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
     public function store(string $source = null)
@@ -71,7 +71,7 @@ abstract class BaseService implements Service
     /**
      * @param string|null $source
      *
-     * @throws \Helldar\SpammersServer\Exceptions\SpammerDetectedException
+     * @throws \Helldar\BlacklistServer\Exceptions\BlacklistDetectedException
      * @return bool
      */
     public function check(string $source = null): bool
@@ -81,7 +81,7 @@ abstract class BaseService implements Service
         if ($this->exists($source)) {
             $type = class_basename($this->model);
 
-            throw new SpammerDetectedException($type, $source);
+            throw new BlacklistDetectedException($type, $source);
         }
 
         return true;

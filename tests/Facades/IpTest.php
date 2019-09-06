@@ -3,9 +3,9 @@
 namespace Tests\Facades;
 
 use Exception;
-use Helldar\SpammersServer\Facades\Helpers\Validator;
-use Helldar\SpammersServer\Facades\Ip;
-use Helldar\SpammersServer\Models\Ip as IpModel;
+use Helldar\BlacklistServer\Facades\Helpers\Validator;
+use Helldar\BlacklistServer\Facades\Ip;
+use Helldar\BlacklistServer\Models\Ip as IpModel;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -121,7 +121,7 @@ class IpTest extends TestCase
         Ip::exists($this->foo);
     }
 
-    public function testExistsSpammerDetected()
+    public function testExistsBlacklistDetected()
     {
         Ip::store($this->correct);
 

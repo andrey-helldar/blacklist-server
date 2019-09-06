@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Helpers;
+namespace Helldar\BlacklistServer\Helpers;
 
-use Helldar\SpammersServer\Constants\Rules;
+use Helldar\BlacklistServer\Constants\Rules;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use function compact;

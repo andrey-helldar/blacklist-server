@@ -1,14 +1,14 @@
 <?php
 
-namespace Helldar\SpammersServer\Http\Controllers;
+namespace Helldar\BlacklistServer\Http\Controllers;
 
 use Exception;
-use Helldar\SpammersServer\Exceptions\UnknownServerTypeException;
-use Helldar\SpammersServer\Facades\Email;
-use Helldar\SpammersServer\Facades\Helpers\Validator;
-use Helldar\SpammersServer\Facades\Host;
-use Helldar\SpammersServer\Facades\Ip;
-use Helldar\SpammersServer\Facades\Phone;
+use Helldar\BlacklistServer\Exceptions\UnknownServerTypeException;
+use Helldar\BlacklistServer\Facades\Email;
+use Helldar\BlacklistServer\Facades\Helpers\Validator;
+use Helldar\BlacklistServer\Facades\Host;
+use Helldar\BlacklistServer\Facades\Ip;
+use Helldar\BlacklistServer\Facades\Phone;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -38,7 +38,7 @@ class IndexController extends Controller
         try {
             $service = $this->service($request);
 
-            $this->message = $service::store($request->get('source')) ?: trans('spammers_server::trans');
+            $this->message = $service::store($request->get('source')) ?: trans('blacklist_server::trans');
 
         } catch (ValidationException $exception) {
 
@@ -60,7 +60,7 @@ class IndexController extends Controller
         try {
             $service = $this->service($request);
 
-            $this->message = $service::check($request->get('source')) ?: trans('spammers_server::trans');
+            $this->message = $service::check($request->get('source')) ?: trans('blacklist_server::trans');
 
         } catch (ValidationException $exception) {
 
@@ -80,7 +80,7 @@ class IndexController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      *
-     * @throws \Helldar\SpammersServer\Exceptions\UnknownServerTypeException
+     * @throws \Helldar\BlacklistServer\Exceptions\UnknownServerTypeException
      * @return mixed
      */
     private function service(Request $request)

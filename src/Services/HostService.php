@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services;
+namespace Helldar\BlacklistServer\Services;
 
-use Helldar\SpammersServer\Models\Host;
+use Helldar\BlacklistServer\Models\Host;
 
 class HostService extends BaseService
 {

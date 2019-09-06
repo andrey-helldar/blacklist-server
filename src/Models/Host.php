@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Models;
+namespace Helldar\BlacklistServer\Models;
 
 class Host extends BaseModel
 {
-    protected $table = 'spammers_hosts';
+    protected $table = 'blacklist_hosts';
 }

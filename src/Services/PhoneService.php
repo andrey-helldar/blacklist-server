@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services;
+namespace Helldar\BlacklistServer\Services;
 
-use Helldar\SpammersServer\Models\Phone;
+use Helldar\BlacklistServer\Models\Phone;
 use Illuminate\Support\Str;
 use function preg_replace;
 use function str_ireplace;

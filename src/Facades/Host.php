@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Facades;
+namespace Helldar\BlacklistServer\Facades;
 
-use Helldar\SpammersServer\Services\HostService;
+use Helldar\BlacklistServer\Services\HostService;
 use Illuminate\Support\Facades\Facade;
 
 class Host extends Facade

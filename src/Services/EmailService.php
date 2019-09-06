@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Services;
+namespace Helldar\BlacklistServer\Services;
 
-use Helldar\SpammersServer\Models\Email;
+use Helldar\BlacklistServer\Models\Email;
 
 class EmailService extends BaseService
 {

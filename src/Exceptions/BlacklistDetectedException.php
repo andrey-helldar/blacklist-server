@@ -1,12 +1,12 @@
 <?php
 
-namespace Helldar\SpammersServer\Exceptions;
+namespace Helldar\BlacklistServer\Exceptions;
 
 use Exception;
 use Illuminate\Support\Str;
 use function sprintf;
 
-class SpammerDetectedException extends Exception
+class BlacklistDetectedException extends Exception
 {
     public function __construct(string $type, string $source)
     {

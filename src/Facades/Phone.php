@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Facades;
+namespace Helldar\BlacklistServer\Facades;
 
-use Helldar\SpammersServer\Services\PhoneService;
+use Helldar\BlacklistServer\Services\PhoneService;
 use Illuminate\Support\Facades\Facade;
 
 class Phone extends Facade

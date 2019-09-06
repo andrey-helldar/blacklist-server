@@ -3,9 +3,9 @@
 namespace Tests\Facades;
 
 use Exception;
-use Helldar\SpammersServer\Facades\Helpers\Validator;
-use Helldar\SpammersServer\Facades\Phone;
-use Helldar\SpammersServer\Models\Phone as PhoneModel;
+use Helldar\BlacklistServer\Facades\Helpers\Validator;
+use Helldar\BlacklistServer\Facades\Phone;
+use Helldar\BlacklistServer\Models\Phone as PhoneModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
@@ -121,7 +121,7 @@ class PhoneTest extends TestCase
         Phone::exists($this->foo);
     }
 
-    public function testExistsSpammerDetected()
+    public function testExistsBlacklistDetected()
     {
         Phone::store($this->correct);
 

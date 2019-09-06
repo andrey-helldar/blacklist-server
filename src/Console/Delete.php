@@ -1,17 +1,17 @@
 <?php
 
-namespace Helldar\SpammersServer\Console;
+namespace Helldar\BlacklistServer\Console;
 
 use Carbon\Carbon;
-use Helldar\SpammersServer\Models\Email;
-use Helldar\SpammersServer\Models\Host;
-use Helldar\SpammersServer\Models\Ip;
-use Helldar\SpammersServer\Models\Phone;
+use Helldar\BlacklistServer\Models\Email;
+use Helldar\BlacklistServer\Models\Host;
+use Helldar\BlacklistServer\Models\Ip;
+use Helldar\BlacklistServer\Models\Phone;
 use Illuminate\Console\Command;
 
 class Delete extends Command
 {
-    protected $signature = 'spammers:delete';
+    protected $signature = 'blacklist:delete';
 
     protected $description = 'Soft delete expired records';
 

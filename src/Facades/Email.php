@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Facades;
+namespace Helldar\BlacklistServer\Facades;
 
-use Helldar\SpammersServer\Services\EmailService;
+use Helldar\BlacklistServer\Services\EmailService;
 use Illuminate\Support\Facades\Facade;
 
 class Email extends Facade

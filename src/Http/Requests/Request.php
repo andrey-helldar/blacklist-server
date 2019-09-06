@@ -1,8 +1,8 @@
 <?php
 
-namespace Helldar\SpammersServer\Http\Requests;
+namespace Helldar\BlacklistServer\Http\Requests;
 
-use Helldar\SpammersServer\Constants\Rules;
+use Helldar\BlacklistServer\Constants\Rules;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
