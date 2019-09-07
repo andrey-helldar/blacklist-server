@@ -2,24 +2,24 @@
 
 namespace Helldar\BlacklistServer\Helpers;
 
-use Helldar\BlacklistServer\Constants\Rules;
+use Helldar\BlacklistCore\Constants\Rules;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use function compact;
 
 class ValidationHelper
 {
-    public function validate(string $model, string $source = null)
+    public function validate(string $type, string $source = null)
     {
         $this
-            ->make($model, $source)
+            ->make($type, $source)
             ->validate();
     }
 
-    public function errors(string $model, string $source = null)
+    public function errors(string $type, string $source = null)
     {
         return $this
-            ->make($model, $source)
+            ->make($type, $source)
             ->errors();
     }
 
@@ -28,10 +28,10 @@ class ValidationHelper
         return Arr::flatten($errors);
     }
 
-    public function make(string $model, string $source = null)
+    public function make(string $type, string $source = null)
     {
         return Validator::make(compact('source'), [
-            'source' => Rules::get($model),
+            'source' => Rules::get($type),
         ], Rules::MESSAGES);
     }
 }

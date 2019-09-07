@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d5ff17a117a010cbf24ed7d65b764d2",
+    "content-hash": "afecfdfb6c5d71d314034200140262ba",
     "packages": [
         {
             "name": "andrey-helldar/api-response",
@@ -68,6 +68,61 @@
                 "symfony"
             ],
             "time": "2019-07-22T09:35:53+00:00"
+        },
+        {
+            "name": "andrey-helldar/blacklist-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:andrey-helldar/blacklist-core.git",
+                "reference": "8c5c12361feb77b496fecffc5b4d6eb1dbd0b69a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andrey-helldar/blacklist-core/zipball/8c5c12361feb77b496fecffc5b4d6eb1dbd0b69a",
+                "reference": "8c5c12361feb77b496fecffc5b4d6eb1dbd0b69a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.5|^6.0",
+                "php": "^7.1.3"
+            },
+            "suggest": {
+                "symfony/thanks": "Give thanks (in the form of a GitHub) to your fellow PHP package maintainers"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Helldar\\BlacklistCore\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Helldar",
+                    "email": "helldar@ai-rus.com"
+                }
+            ],
+            "description": "Core for blacklist server and client",
+            "keywords": [
+                "anti-spam",
+                "antispam",
+                "blacklist",
+                "blacklist",
+                "blacklist",
+                "client",
+                "core",
+                "laravel",
+                "server",
+                "spam"
+            ],
+            "support": {
+                "issues": "https://github.com/andrey-helldar/blacklist-core/issues",
+                "source": "https://github.com/andrey-helldar/blacklist-core"
+            },
+            "time": "2019-09-06T23:49:59+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -4449,7 +4504,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "andrey-helldar/blacklist-core": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

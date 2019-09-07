@@ -2,6 +2,7 @@
 
 namespace Tests\Routes;
 
+use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\Facades\Email;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -18,7 +19,7 @@ class EmailTest extends TestCase
     {
         Email::store($this->correct);
 
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type'   => 'email',
             'source' => $this->correct,
         ]);
@@ -35,7 +36,7 @@ class EmailTest extends TestCase
 
         Email::store($this->foo);
 
-        $this->call('POST', 'api/blacklist', [
+        $this->call('POST', Server::URI, [
             'type'   => 'email',
             'source' => $this->correct,
         ]);
@@ -43,7 +44,7 @@ class EmailTest extends TestCase
 
     public function testStoreFailSourceMessage()
     {
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type'   => 'email',
             'source' => $this->foo,
         ]);
@@ -59,7 +60,7 @@ class EmailTest extends TestCase
 
     public function testStoreFailEmptySource()
     {
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type' => 'email',
         ]);
 
@@ -76,7 +77,7 @@ class EmailTest extends TestCase
     {
         Email::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
             'source' => $this->correct,
         ]);
@@ -90,7 +91,7 @@ class EmailTest extends TestCase
     {
         Email::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
             'source' => $this->incorrect,
         ]);
@@ -106,7 +107,7 @@ class EmailTest extends TestCase
 
         Email::store($this->foo);
 
-        $this->call('GET', 'api/blacklist', [
+        $this->call('GET', Server::URI, [
             'type'   => 'email',
             'source' => $this->correct,
         ]);
@@ -114,7 +115,7 @@ class EmailTest extends TestCase
 
     public function testCheckFailSourceMessage()
     {
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
             'source' => $this->foo,
         ]);
@@ -130,7 +131,7 @@ class EmailTest extends TestCase
 
     public function testCheckFailEmptySource()
     {
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type' => 'email',
         ]);
 

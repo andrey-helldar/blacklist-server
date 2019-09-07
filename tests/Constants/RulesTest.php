@@ -2,7 +2,8 @@
 
 namespace Tests\Constants;
 
-use Helldar\BlacklistServer\Constants\Rules;
+use Helldar\BlacklistCore\Constants\Rules;
+use Helldar\BlacklistCore\Constants\Types;
 use Tests\TestCase;
 
 class RulesTest extends TestCase
@@ -22,13 +23,13 @@ class RulesTest extends TestCase
 
     public function testKeys()
     {
-        $this->assertEquals(['email', 'host', 'phone', 'ip'], Rules::keysBasename());
+        $this->assertEquals(['email', 'host', 'phone', 'ip'], Types::get());
     }
 
     public function testKeysDivided()
     {
-        $this->assertEquals('"email", "host", "phone", "ip"', Rules::keysDivided());
+        $this->assertEquals('"email", "host", "phone", "ip"', Types::getDivided());
 
-        $this->assertEquals('"email" or "host" or "phone" or "ip"', Rules::keysDivided(' or '));
+        $this->assertEquals('"email" or "host" or "phone" or "ip"', Types::getDivided(' or '));
     }
 }

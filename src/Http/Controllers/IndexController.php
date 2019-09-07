@@ -3,7 +3,7 @@
 namespace Helldar\BlacklistServer\Http\Controllers;
 
 use Exception;
-use Helldar\BlacklistServer\Exceptions\UnknownServerTypeException;
+use Helldar\BlacklistCore\Exceptions\UnknownServerTypeException;
 use Helldar\BlacklistServer\Facades\Email;
 use Helldar\BlacklistServer\Facades\Helpers\Validator;
 use Helldar\BlacklistServer\Facades\Host;
@@ -80,7 +80,7 @@ class IndexController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      *
-     * @throws \Helldar\BlacklistServer\Exceptions\UnknownServerTypeException
+     * @throws \Helldar\BlacklistCore\Exceptions\UnknownServerTypeException
      * @return mixed
      */
     private function service(Request $request)

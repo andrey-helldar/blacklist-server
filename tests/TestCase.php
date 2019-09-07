@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\ServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
@@ -43,7 +44,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     private function setRoutes($app)
     {
-        $app['router']->post('api/blacklist', 'Helldar\BlacklistServer\Http\Controllers\IndexController@store');
-        $app['router']->get('api/blacklist', 'Helldar\BlacklistServer\Http\Controllers\IndexController@check');
+        $app['router']->post(Server::URI, 'Helldar\BlacklistServer\Http\Controllers\IndexController@store');
+        $app['router']->get(Server::URI, 'Helldar\BlacklistServer\Http\Controllers\IndexController@check');
     }
 }

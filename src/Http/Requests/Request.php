@@ -2,7 +2,8 @@
 
 namespace Helldar\BlacklistServer\Http\Requests;
 
-use Helldar\BlacklistServer\Constants\Rules;
+use Helldar\BlacklistCore\Constants\Rules;
+use Helldar\BlacklistCore\Constants\Types;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
@@ -19,7 +20,7 @@ class Request extends FormRequest
         $type = $this->get('type');
 
         return [
-            'type'   => ['required', 'string', Rule::in(Rules::keysBasename())],
+            'type'   => ['required', 'string', Rule::in(Types::get())],
             'source' => Arr::get(Rules::get($type), $type, Rules::DEFAULT),
         ];
     }

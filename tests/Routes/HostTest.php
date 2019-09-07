@@ -2,6 +2,7 @@
 
 namespace Tests\Routes;
 
+use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\Facades\Host;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
@@ -18,7 +19,7 @@ class HostTest extends TestCase
     {
         Host::store($this->correct);
 
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type'   => 'host',
             'source' => $this->correct,
         ]);
@@ -35,7 +36,7 @@ class HostTest extends TestCase
 
         Host::store($this->foo);
 
-        $this->call('POST', 'api/blacklist', [
+        $this->call('POST', Server::URI, [
             'type'   => 'host',
             'source' => $this->correct,
         ]);
@@ -43,7 +44,7 @@ class HostTest extends TestCase
 
     public function testStoreFailSourceMessage()
     {
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type'   => 'host',
             'source' => $this->foo,
         ]);
@@ -59,7 +60,7 @@ class HostTest extends TestCase
 
     public function testStoreFailEmptySource()
     {
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type' => 'host',
         ]);
 
@@ -72,7 +73,7 @@ class HostTest extends TestCase
     {
         Host::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
             'source' => $this->correct,
         ]);
@@ -89,7 +90,7 @@ class HostTest extends TestCase
     {
         Host::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
             'source' => 'http://foo.example.com',
         ]);
@@ -102,7 +103,7 @@ class HostTest extends TestCase
     {
         Host::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
             'source' => $this->incorrect,
         ]);
@@ -119,7 +120,7 @@ class HostTest extends TestCase
 
         Host::store($this->foo);
 
-        $this->call('GET', 'api/blacklist', [
+        $this->call('GET', Server::URI, [
             'type'   => 'host',
             'source' => $this->correct,
         ]);
@@ -127,7 +128,7 @@ class HostTest extends TestCase
 
     public function testCheckFailSourceMessage()
     {
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
             'source' => $this->foo,
         ]);
@@ -139,7 +140,7 @@ class HostTest extends TestCase
 
     public function testCheckFailEmptySource()
     {
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type' => 'host',
         ]);
 

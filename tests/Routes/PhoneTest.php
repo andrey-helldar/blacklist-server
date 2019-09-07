@@ -2,9 +2,12 @@
 
 namespace Tests\Routes;
 
+use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\Facades\Phone;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
+use function json_encode;
+use function trim;
 
 class PhoneTest extends TestCase
 {
@@ -18,14 +21,14 @@ class PhoneTest extends TestCase
     {
         Phone::store($this->correct);
 
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
 
         $result->assertStatus(200);
         $result->assertJsonStructure(['source', 'expired_at', 'created_at', 'updated_at']);
-        $result->assertSee(\json_encode($this->correct));
+        $result->assertSee(json_encode($this->correct));
     }
 
     public function testStoreFailValidation()
@@ -35,7 +38,7 @@ class PhoneTest extends TestCase
 
         Phone::store($this->foo);
 
-        $this->call('POST', 'api/blacklist', [
+        $this->call('POST', Server::URI, [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
@@ -43,7 +46,7 @@ class PhoneTest extends TestCase
 
     public function testStoreFailSourceMessage()
     {
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type'   => 'phone',
             'source' => $this->foo,
         ]);
@@ -59,7 +62,7 @@ class PhoneTest extends TestCase
 
     public function testStoreFailEmptySource()
     {
-        $result = $this->call('POST', 'api/blacklist', [
+        $result = $this->call('POST', Server::URI, [
             'type' => 'phone',
         ]);
 
@@ -72,13 +75,13 @@ class PhoneTest extends TestCase
     {
         Phone::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
 
-        $phone = \json_encode($this->correct);
-        $phone = \trim($phone, '"');
+        $phone = json_encode($this->correct);
+        $phone = trim($phone, '"');
 
         $result->assertStatus(423);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
@@ -89,7 +92,7 @@ class PhoneTest extends TestCase
     {
         Phone::store($this->correct);
 
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'phone',
             'source' => '192.100.100.100',
         ]);
@@ -105,7 +108,7 @@ class PhoneTest extends TestCase
 
         Phone::store($this->foo);
 
-        $this->call('GET', 'api/blacklist', [
+        $this->call('GET', Server::URI, [
             'type'   => 'phone',
             'source' => $this->correct,
         ]);
@@ -113,7 +116,7 @@ class PhoneTest extends TestCase
 
     public function testCheckFailSourceMessage()
     {
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type'   => 'phone',
             'source' => $this->foo,
         ]);
@@ -125,7 +128,7 @@ class PhoneTest extends TestCase
 
     public function testCheckFailEmptySource()
     {
-        $result = $this->call('GET', 'api/blacklist', [
+        $result = $this->call('GET', Server::URI, [
             'type' => 'phone',
         ]);
 

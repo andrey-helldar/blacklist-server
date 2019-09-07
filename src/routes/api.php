@@ -1,9 +1,10 @@
 <?php
 
+use Helldar\BlacklistCore\Constants\Server;
 use Illuminate\Support\Facades\Route;
 
 Route::namespace('\Helldar\BlacklistServer\Http\Controllers')
-    ->prefix('api/blacklist')
+    ->prefix(Server::URI)
     ->middleware('api')
     ->name('api.blacklist.')
     ->group(function () {
