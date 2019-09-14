@@ -3,11 +3,13 @@
 namespace Helldar\BlacklistServer\Console;
 
 use Carbon\Carbon;
+use Exception;
 use Helldar\BlacklistServer\Models\Email;
 use Helldar\BlacklistServer\Models\Host;
 use Helldar\BlacklistServer\Models\Ip;
 use Helldar\BlacklistServer\Models\Phone;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 
 class Delete extends Command
 {
@@ -15,6 +17,9 @@ class Delete extends Command
 
     protected $description = 'Soft delete expired records';
 
+    /**
+     * @throws Exception
+     */
     public function handle()
     {
         $models = [
@@ -30,7 +35,8 @@ class Delete extends Command
     }
 
     /**
-     * @param string|\Illuminate\Database\Eloquent\Model $model
+     * @param string|Model $model
+     * @throws Exception
      */
     private function delete(string $model)
     {

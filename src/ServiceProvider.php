@@ -18,8 +18,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__ . './resources/lang', 'blacklist_server');
-
         if (config('blacklist_server.use_routes', true)) {
             $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
         }

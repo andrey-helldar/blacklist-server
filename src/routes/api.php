@@ -10,6 +10,6 @@ Route::namespace('\Helldar\BlacklistServer\Http\Controllers')
     ->group(function () {
 
         Route::post('/', 'IndexController@store')->name('store');
-        Route::get('/', 'IndexController@check')->name('check');
+        Route::get('/', 'IndexController@exists')->name('exists');
 
     });

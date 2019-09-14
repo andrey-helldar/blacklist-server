@@ -16,7 +16,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
 use function api_response;
 use function array_key_exists;
-use function trans;
 
 class IndexController extends Controller
 {
@@ -38,7 +37,31 @@ class IndexController extends Controller
         try {
             $service = $this->service($request);
 
-            $this->message = $service::store($request->get('value')) ?: trans('blacklist_server::trans');
+            $this->message = $service::store($request->get('value'));
+
+        } catch (ValidationException $exception) {
+
+            $this->code = $exception->getCode() ?: 400;
+            $this->message = Validator::flatten($exception->errors());
+
+        } catch (Exception $exception) {
+
+            $this->code = $exception->getCode() ?: 400;
+            $this->message = $exception->getMessage();
+
+        } finally {
+            return api_response($this->message, $this->code);
+        }
+    }
+
+    public function exists(Request $request)
+    {
+        try {
+            $service = $this->service($request);
+
+            $this->message = $service::check($request->get('value'))
+                ? 'ok'
+                : null;
 
         } catch (ValidationException $exception) {
 
@@ -71,27 +94,5 @@ class IndexController extends Controller
         }
 
         throw new UnknownTypeException($type);
-    }
-
-    public function check(Request $request)
-    {
-        try {
-            $service = $this->service($request);
-
-            $this->message = $service::check($request->get('value')) ?: trans('blacklist_server::trans');
-
-        } catch (ValidationException $exception) {
-
-            $this->code = $exception->getCode() ?: 400;
-            $this->message = Validator::flatten($exception->errors());
-
-        } catch (Exception $exception) {
-
-            $this->code = $exception->getCode() ?: 400;
-            $this->message = $exception->getMessage();
-
-        } finally {
-            return api_response($this->message, $this->code);
-        }
     }
 }
