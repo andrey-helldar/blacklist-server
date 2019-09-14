@@ -21,7 +21,7 @@ class HostTest extends TestCase
 
         $result = $this->call('POST', Server::URI, [
             'type'   => 'host',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
 
         $result->assertStatus(200);
@@ -38,7 +38,7 @@ class HostTest extends TestCase
 
         $this->call('POST', Server::URI, [
             'type'   => 'host',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
     }
 
@@ -46,7 +46,7 @@ class HostTest extends TestCase
     {
         $result = $this->call('POST', Server::URI, [
             'type'   => 'host',
-            'value' => $this->foo,
+            'value'  => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -75,7 +75,7 @@ class HostTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
 
         $host = \json_encode($this->correct);
@@ -92,7 +92,7 @@ class HostTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'value' => 'http://foo.example.com',
+            'value'  => 'http://foo.example.com',
         ]);
 
         $result->assertStatus(200);
@@ -105,7 +105,7 @@ class HostTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'value' => $this->incorrect,
+            'value'  => $this->incorrect,
         ]);
 
         $result->assertStatus(400);
@@ -122,7 +122,7 @@ class HostTest extends TestCase
 
         $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
     }
 
@@ -130,7 +130,7 @@ class HostTest extends TestCase
     {
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'value' => $this->foo,
+            'value'  => $this->foo,
         ]);
 
         $result->assertStatus(400);

@@ -5,8 +5,8 @@ namespace Tests\Routes;
 use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\Facades\Phone;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
 use function json_encode;
+use Tests\TestCase;
 use function trim;
 
 class PhoneTest extends TestCase
@@ -23,7 +23,7 @@ class PhoneTest extends TestCase
 
         $result = $this->call('POST', Server::URI, [
             'type'   => 'phone',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
 
         $result->assertStatus(200);
@@ -40,7 +40,7 @@ class PhoneTest extends TestCase
 
         $this->call('POST', Server::URI, [
             'type'   => 'phone',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
     }
 
@@ -48,7 +48,7 @@ class PhoneTest extends TestCase
     {
         $result = $this->call('POST', Server::URI, [
             'type'   => 'phone',
-            'value' => $this->foo,
+            'value'  => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -77,7 +77,7 @@ class PhoneTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'phone',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
 
         $phone = json_encode($this->correct);
@@ -94,7 +94,7 @@ class PhoneTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'phone',
-            'value' => '192.100.100.100',
+            'value'  => '192.100.100.100',
         ]);
 
         $result->assertStatus(200);
@@ -110,7 +110,7 @@ class PhoneTest extends TestCase
 
         $this->call('GET', Server::URI, [
             'type'   => 'phone',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
     }
 
@@ -118,7 +118,7 @@ class PhoneTest extends TestCase
     {
         $result = $this->call('GET', Server::URI, [
             'type'   => 'phone',
-            'value' => $this->foo,
+            'value'  => $this->foo,
         ]);
 
         $result->assertStatus(400);

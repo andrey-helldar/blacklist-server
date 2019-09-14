@@ -36,6 +36,7 @@ class Delete extends Command
 
     /**
      * @param string|Model $model
+     *
      * @throws Exception
      */
     private function delete(string $model)

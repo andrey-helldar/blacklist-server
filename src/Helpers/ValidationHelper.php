@@ -2,10 +2,10 @@
 
 namespace Helldar\BlacklistServer\Helpers;
 
+use function compact;
 use Helldar\BlacklistCore\Constants\Rules;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
-use function compact;
 
 class ValidationHelper
 {

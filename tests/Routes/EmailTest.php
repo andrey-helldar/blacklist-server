@@ -21,7 +21,7 @@ class EmailTest extends TestCase
 
         $result = $this->call('POST', Server::URI, [
             'type'   => 'email',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
 
         $result->assertStatus(200);
@@ -38,7 +38,7 @@ class EmailTest extends TestCase
 
         $this->call('POST', Server::URI, [
             'type'   => 'email',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
     }
 
@@ -46,7 +46,7 @@ class EmailTest extends TestCase
     {
         $result = $this->call('POST', Server::URI, [
             'type'   => 'email',
-            'value' => $this->foo,
+            'value'  => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -79,7 +79,7 @@ class EmailTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
 
         $result->assertStatus(423);
@@ -93,7 +93,7 @@ class EmailTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'value' => $this->incorrect,
+            'value'  => $this->incorrect,
         ]);
 
         $result->assertStatus(200);
@@ -109,7 +109,7 @@ class EmailTest extends TestCase
 
         $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'value' => $this->correct,
+            'value'  => $this->correct,
         ]);
     }
 
@@ -117,7 +117,7 @@ class EmailTest extends TestCase
     {
         $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'value' => $this->foo,
+            'value'  => $this->foo,
         ]);
 
         $result->assertStatus(400);
