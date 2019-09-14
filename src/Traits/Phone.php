@@ -9,15 +9,15 @@ use function str_ireplace;
 
 class Phone
 {
-    protected function clear(string $phone = null)
-    : string {
+    protected function clear(string $phone = null): string
+    {
         $phone = $this->convertWords($phone);
 
         return (string) preg_replace("/\D/", '', $phone);
     }
 
-    private function convertWords(string $phone = null)
-    : string {
+    private function convertWords(string $phone = null): string
+    {
         $phone   = Str::lower($phone);
         $replace = [
             '2' => ['a', 'b', 'c'],
