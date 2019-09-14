@@ -21,11 +21,11 @@ class EmailTest extends TestCase
 
         $result = $this->call('POST', Server::URI, [
             'type'   => 'email',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
-        $result->assertJsonStructure(['source', 'expired_at', 'created_at', 'updated_at']);
+        $result->assertJsonStructure(['value', 'expired_at', 'created_at', 'updated_at']);
         $result->assertSee($this->correct);
     }
 
@@ -38,7 +38,7 @@ class EmailTest extends TestCase
 
         $this->call('POST', Server::URI, [
             'type'   => 'email',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
     }
 
@@ -46,7 +46,7 @@ class EmailTest extends TestCase
     {
         $result = $this->call('POST', Server::URI, [
             'type'   => 'email',
-            'source' => $this->foo,
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -55,7 +55,7 @@ class EmailTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source must be a valid email address.');
+        $result->assertSee('The value must be a valid email address.');
     }
 
     public function testStoreFailEmptySource()
@@ -70,7 +70,7 @@ class EmailTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source field is required.');
+        $result->assertSee('The value field is required.');
     }
 
     public function testCheckIsDetected()
@@ -79,7 +79,7 @@ class EmailTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(423);
@@ -93,7 +93,7 @@ class EmailTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'source' => $this->incorrect,
+            'value' => $this->incorrect,
         ]);
 
         $result->assertStatus(200);
@@ -109,7 +109,7 @@ class EmailTest extends TestCase
 
         $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
     }
 
@@ -117,7 +117,7 @@ class EmailTest extends TestCase
     {
         $result = $this->call('GET', Server::URI, [
             'type'   => 'email',
-            'source' => $this->foo,
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -126,7 +126,7 @@ class EmailTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source must be a valid email address.');
+        $result->assertSee('The value must be a valid email address.');
     }
 
     public function testCheckFailEmptySource()
@@ -141,6 +141,6 @@ class EmailTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source field is required.');
+        $result->assertSee('The value field is required.');
     }
 }

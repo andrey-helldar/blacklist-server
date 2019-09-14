@@ -21,11 +21,11 @@ class IpTest extends TestCase
 
         $result = $this->call('POST', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
-        $result->assertJsonStructure(['source', 'expired_at', 'created_at', 'updated_at']);
+        $result->assertJsonStructure(['value', 'expired_at', 'created_at', 'updated_at']);
         $result->assertSee(\json_encode($this->correct));
     }
 
@@ -38,7 +38,7 @@ class IpTest extends TestCase
 
         $this->call('POST', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
     }
 
@@ -46,7 +46,7 @@ class IpTest extends TestCase
     {
         $result = $this->call('POST', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->foo,
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -55,7 +55,7 @@ class IpTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source must be a valid IP address.');
+        $result->assertSee('The value must be a valid IP address.');
     }
 
     public function testStoreFailEmptySource()
@@ -66,7 +66,7 @@ class IpTest extends TestCase
 
         $result->assertStatus(400);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
-        $result->assertSee('The source field is required.');
+        $result->assertSee('The value field is required.');
     }
 
     public function testCheckIsDetected()
@@ -75,7 +75,7 @@ class IpTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
 
         $ip = \json_encode($this->correct);
@@ -92,7 +92,7 @@ class IpTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'ip',
-            'source' => '192.100.100.100',
+            'value' => '192.100.100.100',
         ]);
 
         $result->assertStatus(200);
@@ -105,12 +105,12 @@ class IpTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->incorrect,
+            'value' => $this->incorrect,
         ]);
 
         $result->assertStatus(400);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
-        $result->assertSee('The source must be a valid IP address.');
+        $result->assertSee('The value must be a valid IP address.');
     }
 
     public function testCheckFailValidationFoo()
@@ -122,7 +122,7 @@ class IpTest extends TestCase
 
         $this->call('GET', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
     }
 
@@ -130,12 +130,12 @@ class IpTest extends TestCase
     {
         $result = $this->call('GET', Server::URI, [
             'type'   => 'ip',
-            'source' => $this->foo,
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
-        $result->assertSee('The source must be a valid IP address.');
+        $result->assertSee('The value must be a valid IP address.');
     }
 
     public function testCheckFailEmptySource()
@@ -150,6 +150,6 @@ class IpTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source field is required.');
+        $result->assertSee('The value field is required.');
     }
 }

@@ -9,17 +9,17 @@ use function compact;
 
 class ValidationHelper
 {
-    public function validate(string $type, string $source = null)
+    public function validate(string $type, string $value = null)
     {
         $this
-            ->make($type, $source)
+            ->make($type, $value)
             ->validate();
     }
 
-    public function errors(string $type, string $source = null)
+    public function errors(string $type, string $value = null)
     {
         return $this
-            ->make($type, $source)
+            ->make($type, $value)
             ->errors();
     }
 
@@ -28,10 +28,10 @@ class ValidationHelper
         return Arr::flatten($errors);
     }
 
-    public function make(string $type, string $source = null)
+    public function make(string $type, string $value = null)
     {
-        return Validator::make(compact('source'), [
-            'source' => Rules::get($type),
+        return Validator::make(compact('value'), [
+            'value' => Rules::get($type),
         ], Rules::MESSAGES);
     }
 }

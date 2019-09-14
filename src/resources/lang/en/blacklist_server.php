@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'found' => 'Checked blacklist :source of type :type found!',
+    'found' => 'Checked blacklist :value of type :type found!',
 ];

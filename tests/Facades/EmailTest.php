@@ -25,7 +25,7 @@ class EmailTest extends TestCase
 
         $this->assertInstanceOf(EmailModel::class, $item);
 
-        $this->assertEquals($this->correct, $item->source);
+        $this->assertEquals($this->correct, $item->value);
     }
 
     public function testStoreFailValidationException()
@@ -43,7 +43,7 @@ class EmailTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source must be a valid email address.', Arr::first($errors));
+            $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
         }
     }
 
@@ -54,7 +54,7 @@ class EmailTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -89,7 +89,7 @@ class EmailTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source must be a valid email address.', Arr::first($errors));
+            $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
         }
     }
 
@@ -100,7 +100,7 @@ class EmailTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -139,7 +139,7 @@ class EmailTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source must be a valid email address.', Arr::first($errors));
+            $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
         }
     }
 
@@ -150,7 +150,7 @@ class EmailTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 }

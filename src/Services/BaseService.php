@@ -25,19 +25,19 @@ abstract class BaseService implements Service
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
-    public function store(string $source = null)
+    public function store(string $value = null)
     {
-        $this->validate($source);
+        $this->validate($value);
 
-        if (!$this->exists($source, true)) {
+        if (!$this->exists($value, true)) {
             $ttl = $this->ttl;
 
-            return $this->model::create(compact('source', 'ttl'));
+            return $this->model::create(compact('value', 'ttl'));
         }
 
         $item = $this->model::query()
             ->withTrashed()
-            ->findOrFail($source);
+            ->findOrFail($value);
 
         $item->update([
             'ttl'        => $item->ttl * $this->ttl_multiplier,
@@ -48,25 +48,25 @@ abstract class BaseService implements Service
     }
 
     /**
-     * @param string|null $source
+     * @param string|null $value
      *
      * @throws \Exception
      * @return int
      */
-    public function delete(string $source = null): int
+    public function delete(string $value = null): int
     {
-        $this->validate($source);
+        $this->validate($value);
 
         return $this->model::query()
-            ->findOrFail($source)
+            ->findOrFail($value)
             ->delete();
     }
 
-    public function exists(string $source = null, bool $with_trashed = false): bool
+    public function exists(string $value = null, bool $with_trashed = false): bool
     {
-        $this->validate($source);
+        $this->validate($value);
 
-        $query = $this->model::where('source', $source);
+        $query = $this->model::where('value', $value);
 
         if ($with_trashed) {
             $query->withTrashed();
@@ -76,28 +76,28 @@ abstract class BaseService implements Service
     }
 
     /**
-     * @param string|null $source
+     * @param string|null $value
      *
      * @throws \Helldar\BlacklistCore\Exceptions\BlacklistDetectedException
      * @return bool
      */
-    public function check(string $source = null): bool
+    public function check(string $value = null): bool
     {
-        $this->validate($source);
+        $this->validate($value);
 
-        if ($this->exists($source)) {
+        if ($this->exists($value)) {
             $type = class_basename($this->model);
 
-            throw new BlacklistDetectedException($type, $source);
+            throw new BlacklistDetectedException($type, $value);
         }
 
         return true;
     }
 
-    protected function validate(string $source = null)
+    protected function validate(string $value = null)
     {
         $type = Str::lower(\class_basename($this->model));
 
-        Validator::validate($type, $source);
+        Validator::validate($type, $value);
     }
 }

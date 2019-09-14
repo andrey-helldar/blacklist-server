@@ -24,7 +24,7 @@ class CreateBlacklistTables extends Migration
     {
         foreach ($this->tables as $name => $type) {
             Schema::create($name, function (Blueprint $table) use ($name, $type) {
-                $table->{$type}('source')->unique()->primary();
+                $table->{$type}('value')->unique()->primary();
 
                 $table->unsignedInteger('ttl')->default($this->ttl);
 

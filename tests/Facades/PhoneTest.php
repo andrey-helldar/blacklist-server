@@ -25,7 +25,7 @@ class PhoneTest extends TestCase
 
         $this->assertInstanceOf(PhoneModel::class, $item);
 
-        $this->assertEquals($this->correct, $item->source);
+        $this->assertEquals($this->correct, $item->value);
     }
 
     public function testStoreFailValidationException()
@@ -43,7 +43,7 @@ class PhoneTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -54,7 +54,7 @@ class PhoneTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -89,7 +89,7 @@ class PhoneTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -100,7 +100,7 @@ class PhoneTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -137,7 +137,7 @@ class PhoneTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -148,7 +148,7 @@ class PhoneTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 }

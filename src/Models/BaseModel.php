@@ -13,11 +13,11 @@ abstract class BaseModel extends Model
 
     public $incrementing = false;
 
-    protected $primaryKey = 'source';
+    protected $primaryKey = 'value';
 
     protected $keyType = 'string';
 
-    protected $fillable = ['source', 'ttl', 'expired_at', 'deleted_at'];
+    protected $fillable = ['value', 'ttl', 'expired_at', 'deleted_at'];
 
     protected $dates = ['expired_at', 'deleted_at'];
 

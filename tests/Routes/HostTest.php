@@ -21,11 +21,11 @@ class HostTest extends TestCase
 
         $result = $this->call('POST', Server::URI, [
             'type'   => 'host',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
-        $result->assertJsonStructure(['source', 'expired_at', 'created_at', 'updated_at']);
+        $result->assertJsonStructure(['value', 'expired_at', 'created_at', 'updated_at']);
         $result->assertSee(\json_encode($this->correct));
     }
 
@@ -38,7 +38,7 @@ class HostTest extends TestCase
 
         $this->call('POST', Server::URI, [
             'type'   => 'host',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
     }
 
@@ -46,7 +46,7 @@ class HostTest extends TestCase
     {
         $result = $this->call('POST', Server::URI, [
             'type'   => 'host',
-            'source' => $this->foo,
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -55,7 +55,7 @@ class HostTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source is not a valid URL.');
+        $result->assertSee('The value is not a valid URL.');
     }
 
     public function testStoreFailEmptySource()
@@ -66,7 +66,7 @@ class HostTest extends TestCase
 
         $result->assertStatus(400);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
-        $result->assertSee('The source field is required.');
+        $result->assertSee('The value field is required.');
     }
 
     public function testCheckIsDetected()
@@ -75,7 +75,7 @@ class HostTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
 
         $host = \json_encode($this->correct);
@@ -92,7 +92,7 @@ class HostTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'source' => 'http://foo.example.com',
+            'value' => 'http://foo.example.com',
         ]);
 
         $result->assertStatus(200);
@@ -105,12 +105,12 @@ class HostTest extends TestCase
 
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'source' => $this->incorrect,
+            'value' => $this->incorrect,
         ]);
 
         $result->assertStatus(400);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
-        $result->assertSee('The source is not a valid URL.');
+        $result->assertSee('The value is not a valid URL.');
     }
 
     public function testCheckFailValidationFoo()
@@ -122,7 +122,7 @@ class HostTest extends TestCase
 
         $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'source' => $this->correct,
+            'value' => $this->correct,
         ]);
     }
 
@@ -130,12 +130,12 @@ class HostTest extends TestCase
     {
         $result = $this->call('GET', Server::URI, [
             'type'   => 'host',
-            'source' => $this->foo,
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
-        $result->assertSee('The source is not a valid URL.');
+        $result->assertSee('The value is not a valid URL.');
     }
 
     public function testCheckFailEmptySource()
@@ -150,6 +150,6 @@ class HostTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The source field is required.');
+        $result->assertSee('The value field is required.');
     }
 }

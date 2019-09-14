@@ -11,19 +11,19 @@ class PhoneService extends BaseService
 {
     protected $model = Phone::class;
 
-    public function store(string $source = null)
+    public function store(string $value = null)
     {
-        return parent::store($this->clear($source));
+        return parent::store($this->clear($value));
     }
 
-    public function delete(string $source = null): int
+    public function delete(string $value = null): int
     {
-        return parent::delete($this->clear($source));
+        return parent::delete($this->clear($value));
     }
 
-    public function exists(string $source = null, bool $with_trashed = false): bool
+    public function exists(string $value = null, bool $with_trashed = false): bool
     {
-        return parent::exists($this->clear($source), $with_trashed);
+        return parent::exists($this->clear($value), $with_trashed);
     }
 
     protected function clear(string $phone = null): string

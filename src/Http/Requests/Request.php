@@ -20,8 +20,8 @@ class Request extends FormRequest
         $type = $this->get('type');
 
         return [
-            'type'   => ['required', 'string', Rule::in(Types::get())],
-            'source' => Arr::get(Rules::get($type), $type, Rules::DEFAULT),
+            'type'  => ['required', 'string', Rule::in(Types::get())],
+            'value' => Arr::get(Rules::get($type), $type, Rules::DEFAULT),
         ];
     }
 

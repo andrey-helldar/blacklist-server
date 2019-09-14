@@ -24,7 +24,7 @@ class IpTest extends TestCase
 
         $this->assertInstanceOf(IpModel::class, $item);
 
-        $this->assertEquals($this->correct, $item->source);
+        $this->assertEquals($this->correct, $item->value);
     }
 
     public function testStoreFailValidationException()
@@ -42,7 +42,7 @@ class IpTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source must be a valid IP address.', Arr::first($errors));
+            $this->assertEquals('The value must be a valid IP address.', Arr::first($errors));
         }
     }
 
@@ -53,7 +53,7 @@ class IpTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -89,7 +89,7 @@ class IpTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source must be a valid IP address.', Arr::first($errors));
+            $this->assertEquals('The value must be a valid IP address.', Arr::first($errors));
         }
     }
 
@@ -100,7 +100,7 @@ class IpTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 
@@ -137,7 +137,7 @@ class IpTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source must be a valid IP address.', Arr::first($errors));
+            $this->assertEquals('The value must be a valid IP address.', Arr::first($errors));
         }
     }
 
@@ -148,7 +148,7 @@ class IpTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
-            $this->assertEquals('The source field is required.', Arr::first($errors));
+            $this->assertEquals('The value field is required.', Arr::first($errors));
         }
     }
 }
