@@ -77,6 +77,73 @@ return Phone::exists('+0 (000) 000-00-00');
 
 However, we recommend using the [client](https://github.com/andrey-helldar/blacklist-client).
 
+### store
+
+When sending a POST request to the address of server `https://<your-site>/api/blacklist` with the correct data, it will return a JSON object:
+```json
+{
+  "value": "foo@example.com",
+  "expired_at": "2024-05-11 16:41:04",
+  "created_at": "2019-09-14 11:45:04",
+  "updated_at": "2019-09-14 16:41:04"
+}
+```
+
+If the data being sent is filled incorrectly, the server will return an error with code 400 and the following JSON object:
+```json
+{
+  "error": {
+    "code": 400,
+    "msg": "<message of the error>"
+  }
+}
+```
+
+For example:
+```json
+{
+  "error": {
+    "code": 400,
+    "msg": "The type must be one of email, host, phone or ip, null given."
+  }
+}
+```
+
+### exists
+
+If the requested data is not found in the database, the site will return a 200 code:
+```json
+"ok"
+```
+
+If the requested data is found in the database, the site will return the code 423 (Locked):
+```json
+{
+  "error": {
+    "code": 423,
+    "msg": "Checked email foo@example.com was found in our database."
+  }
+}
+```
+
+If the data being sent is filled incorrectly, the server will return an error with code 400 and the following JSON object.
+For example:
+```json
+{
+  "error": {
+    "code": 400,
+    "msg": ["The value field is required."]
+  }
+}
+
+{
+  "error": {
+    "code": 400,
+    "msg": "The type must be one of email, host, phone or ip, null given."
+  }
+}
+```
+
 
 ## License
 
