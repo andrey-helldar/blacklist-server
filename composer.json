@@ -27,7 +27,6 @@
     "ext-json": "*",
     "andrey-helldar/api-response": "^4.2",
     "andrey-helldar/blacklist-core": "^1.0",
-    "barryvdh/laravel-cors": "^0.11.4",
     "laravel/framework": "^5.6|^6.0",
     "nesbot/carbon": "^1.0|^2.0"
   },
@@ -36,7 +35,8 @@
     "phpunit/phpunit": "^7.0|^8.0"
   },
   "suggest": {
-    "andrey-helldar/blacklist-client": "The blacklist client package for connecting to the Blacklist Server"
+    "andrey-helldar/blacklist-client": "The blacklist client package for connecting to the Blacklist Server",
+    "barryvdh/laravel-cors": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application"
   },
   "autoload": {
     "psr-4": {
