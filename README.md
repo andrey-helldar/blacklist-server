@@ -47,9 +47,14 @@ php artisan vendor:publish --provider="Helldar\BlacklistClient\ServiceProvider"
 
 First look at the [config](src/config/settings.php).
 
-The easiest use is to install package [andrey-helldar/blacklist-client](https://github.com/andrey-helldar/blacklist-client).
+After installation, your application will accept incoming requests for the creation and verification of spammers in stop lists. To do this, you can use packet [andrey-helldar/blacklist-client](https://github.com/andrey-helldar/blacklist-client) or simply send a POST or GET request to address `https://<your-site.com>/api/blacklist`, passing the necessary parameters:
 
-But if you are not looking for easy ways, then you can contact the facades directly:
+| field | required | comment |
+|---|---|---|
+| type | yes | available is: "email", "host", "ip", "phone" |
+| value | yes | string |
+
+In order for the server part to be able to add or check spammers on its own, you can install package [andrey-helldar/blacklist-client](https://github.com/andrey-helldar/blacklist-client) on it or go the more complicated way using facades:
 
 ```php
 use Helldar\BlacklistServer\Facades\Email;
