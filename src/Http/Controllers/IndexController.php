@@ -2,6 +2,8 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
+use function api_response;
+use function array_key_exists;
 use Exception;
 use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
 use Helldar\BlacklistServer\Facades\Email;
@@ -14,8 +16,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
-use function api_response;
-use function array_key_exists;
 
 class IndexController extends Controller
 {
@@ -23,8 +23,8 @@ class IndexController extends Controller
 
     private $services = [
         'email' => Email::class,
-        'host' => Host::class,
-        'ip' => Ip::class,
+        'host'  => Host::class,
+        'ip'    => Ip::class,
         'phone' => Phone::class,
     ];
 
@@ -38,17 +38,12 @@ class IndexController extends Controller
             $service = $this->service($request);
 
             $this->message = $service::store($request->get('value'));
-
         } catch (ValidationException $exception) {
-
-            $this->code = $exception->getCode() ?: 400;
+            $this->code    = $exception->getCode() ?: 400;
             $this->message = Validator::flatten($exception->errors());
-
         } catch (Exception $exception) {
-
-            $this->code = $exception->getCode() ?: 400;
+            $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-
         } finally {
             return api_response($this->message, $this->code);
         }
@@ -62,17 +57,12 @@ class IndexController extends Controller
             $this->message = $service::check($request->get('value'))
                 ? 'ok'
                 : null;
-
         } catch (ValidationException $exception) {
-
-            $this->code = $exception->getCode() ?: 400;
+            $this->code    = $exception->getCode() ?: 400;
             $this->message = Validator::flatten($exception->errors());
-
         } catch (Exception $exception) {
-
-            $this->code = $exception->getCode() ?: 400;
+            $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-
         } finally {
             return api_response($this->message, $this->code);
         }
@@ -81,9 +71,9 @@ class IndexController extends Controller
     /**
      * @param Request $request
      *
-     * @return mixed
-     *
      * @throws UnknownTypeException
+     *
+     * @return mixed
      */
     private function service(Request $request)
     {

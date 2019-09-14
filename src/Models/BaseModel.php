@@ -3,9 +3,9 @@
 namespace Helldar\BlacklistServer\Models;
 
 use Carbon\Carbon;
+use function config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use function config;
 
 abstract class BaseModel extends Model
 {

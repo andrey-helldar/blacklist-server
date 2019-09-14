@@ -143,7 +143,6 @@ class HostTest extends TestCase
 
     public function testExistsFailEmptySource()
     {
-
         try {
             Host::exists();
         } catch (Exception $exception) {

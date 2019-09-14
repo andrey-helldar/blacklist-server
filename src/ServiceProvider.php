@@ -2,9 +2,9 @@
 
 namespace Helldar\BlacklistServer;
 
-use Helldar\BlacklistServer\Console\Delete;
 use function config;
 use function config_path;
+use Helldar\BlacklistServer\Console\Delete;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {

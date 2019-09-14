@@ -2,13 +2,13 @@
 
 namespace Helldar\BlacklistServer\Services;
 
+use function class_basename;
+use function config;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistServer\Contracts\Service;
 use Helldar\BlacklistServer\Facades\Helpers\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use function class_basename;
-use function config;
 
 abstract class BaseService implements Service
 {
@@ -21,9 +21,9 @@ abstract class BaseService implements Service
 
     public function __construct()
     {
-        $this->ttl = (int)config('blacklist_server.ttl', 7);
+        $this->ttl = (int) config('blacklist_server.ttl', 7);
 
-        $this->ttl_multiplier = (int)config('blacklist_server.ttl_multiplier', 3);
+        $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
     public function store(string $value = null)
@@ -41,7 +41,7 @@ abstract class BaseService implements Service
             ->findOrFail($value);
 
         $item->update([
-            'ttl' => $item->ttl * $this->ttl_multiplier,
+            'ttl'        => $item->ttl * $this->ttl_multiplier,
             'deleted_at' => null,
         ]);
 
@@ -64,8 +64,9 @@ abstract class BaseService implements Service
     /**
      * @param string|null $value
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function delete(string $value = null): int
     {
@@ -79,9 +80,9 @@ abstract class BaseService implements Service
     /**
      * @param string|null $value
      *
-     * @return bool
-     *
      * @throws BlacklistDetectedException
+     *
+     * @return bool
      */
     public function check(string $value = null): bool
     {
