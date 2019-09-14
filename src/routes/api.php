@@ -8,6 +8,8 @@ Route::namespace('\Helldar\BlacklistServer\Http\Controllers')
     ->middleware('api')
     ->name('api.blacklist.')
     ->group(function () {
+
         Route::post('/', 'IndexController@store')->name('store');
-        Route::get('/', 'IndexController@exists')->name('exists');
+        Route::get('/', 'IndexController@check')->name('check');
+
     });

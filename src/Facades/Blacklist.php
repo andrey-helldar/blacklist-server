@@ -2,13 +2,13 @@
 
 namespace Helldar\BlacklistServer\Facades;
 
-use Helldar\BlacklistServer\Services\HostService;
+use Helldar\BlacklistServer\Services\BlacklistService;
 use Illuminate\Support\Facades\Facade;
 
-class Host extends Facade
+class Blacklist extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return HostService::class;
+        return BlacklistService::class;
     }
 }

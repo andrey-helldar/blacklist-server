@@ -3,35 +3,45 @@
 namespace Helldar\BlacklistServer\Models;
 
 use Carbon\Carbon;
-use function config;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
-abstract class BaseModel extends Model
+use function config;
+use function trim;
+
+class Blacklist extends Model
 {
-    use SoftDeletes;
-
     public $incrementing = false;
 
     protected $primaryKey = 'value';
 
     protected $keyType = 'string';
 
-    protected $fillable = ['value', 'ttl', 'expired_at', 'deleted_at'];
+    protected $fillable = ['value', 'type', 'ttl', 'expired_at'];
 
-    protected $dates = ['expired_at', 'deleted_at'];
+    protected $dates = ['expired_at'];
 
     protected $casts = [
         'ttl' => 'integer',
     ];
 
-    protected $hidden = ['ttl', 'deleted_at'];
+    protected $hidden = ['ttl'];
 
     public function __construct(array $attributes = [])
     {
         $this->setConnection(config('blacklist_server.connection', 'mysql'));
 
         parent::__construct($attributes);
+    }
+
+    protected function setTypeAttribute(string $value)
+    {
+        $this->attributes['type'] = Str::lower(trim($value));
+    }
+
+    protected function setValueAttribute(string $value)
+    {
+        $this->attributes['value'] = Str::lower(trim($value));
     }
 
     protected function setTtlAttribute(int $value)

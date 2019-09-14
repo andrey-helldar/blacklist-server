@@ -2,31 +2,21 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
-use function api_response;
-use function array_key_exists;
 use Exception;
-use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
-use Helldar\BlacklistServer\Facades\Email;
-use Helldar\BlacklistServer\Facades\Helpers\Validator;
-use Helldar\BlacklistServer\Facades\Host;
-use Helldar\BlacklistServer\Facades\Ip;
-use Helldar\BlacklistServer\Facades\Phone;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Helldar\BlacklistServer\Facades\Blacklist;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use function api_response;
+use function is_array;
 
 class IndexController extends Controller
 {
-    use AuthorizesRequests, ValidatesRequests;
-
-    private $services = [
-        'email' => Email::class,
-        'host'  => Host::class,
-        'ip'    => Ip::class,
-        'phone' => Phone::class,
-    ];
+    use ValidatesRequests;
 
     private $code = 200;
 
@@ -35,54 +25,54 @@ class IndexController extends Controller
     public function store(Request $request)
     {
         try {
-            $service = $this->service($request);
+            $type  = $request->get('type');
+            $value = $request->get('value');
 
-            $this->message = $service::store($request->get('value'));
-        } catch (ValidationException $exception) {
+            $this->message = Blacklist::store($type, $value);
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
-            $this->message = Validator::flatten($exception->errors());
-        } catch (Exception $exception) {
+            $this->message = Arr::flatten($exception->errors());
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
-            return api_response($this->message, $this->code);
+        }
+        finally {
+            return $this->response();
         }
     }
 
-    public function exists(Request $request)
+    public function check(Request $request)
     {
         try {
-            $service = $this->service($request);
+            $type  = $request->get('type');
+            $value = $request->get('value');
 
-            $this->message = $service::check($request->get('value'))
+            $this->message = Blacklist::check($type, $value)
                 ? 'ok'
                 : null;
-        } catch (ValidationException $exception) {
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
-            $this->message = Validator::flatten($exception->errors());
-        } catch (Exception $exception) {
+            $this->message = Arr::flatten($exception->errors());
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
-            return api_response($this->message, $this->code);
+        }
+        finally {
+            return $this->response();
         }
     }
 
-    /**
-     * @param Request $request
-     *
-     * @throws UnknownTypeException
-     *
-     * @return mixed
-     */
-    private function service(Request $request)
+    private function response()
+    : JsonResponse
     {
-        $type = $request->get('type');
+        $message = is_array($this->message)
+            ? $this->message
+            : [$this->message];
 
-        if (array_key_exists($type, $this->services)) {
-            return $this->services[$type];
-        }
-
-        throw new UnknownTypeException($type);
+        return api_response($message, $this->code);
     }
 }

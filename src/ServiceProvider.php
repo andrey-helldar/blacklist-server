@@ -4,7 +4,6 @@ namespace Helldar\BlacklistServer;
 
 use function config;
 use function config_path;
-use Helldar\BlacklistServer\Console\Delete;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -20,12 +19,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         if (config('blacklist_server.use_routes', true)) {
             $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
-        }
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                Delete::class,
-            ]);
         }
     }
 
