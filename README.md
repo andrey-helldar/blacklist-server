@@ -62,17 +62,17 @@ use Helldar\BlacklistServer\Facades\Host;
 use Helldar\BlacklistServer\Facades\Ip;
 use Helldar\BlacklistServer\Facades\Phone;
 
-return Email::store('foo@example.com');
-return Email::exists('foo@example.com');
+return Email::store('foo@example.com') : Helldar\BlacklistServer\Models\Email
+return Email::exists('foo@example.com') : bool
 
-return Host::store('http://example.com');
-return Host::exists('http://example.com');
+return Host::store('http://example.com') : Helldar\BlacklistServer\Models\Host
+return Host::exists('http://example.com') : bool;
 
-return Ip::store('192.168.1.1');
-return Ip::exists('192.168.1.1');
+return Ip::store('192.168.1.1') : Helldar\BlacklistServer\Models\Ip
+return Ip::exists('192.168.1.1') : bool;
 
-return Phone::store('+0 (000) 000-00-00');
-return Phone::exists('+0 (000) 000-00-00');
+return Phone::store('+0 (000) 000-00-00') : Helldar\BlacklistServer\Models\Phone
+return Phone::exists('+0 (000) 000-00-00') : bool;
 ```
 
 However, we recommend using the [client](https://github.com/andrey-helldar/blacklist-client).
