@@ -3,7 +3,7 @@
 ![blacklist server](https://user-images.githubusercontent.com/10347617/64910710-359f4100-d722-11e9-9cc0-071b06330edf.png)
 
 <p align="center">
-    <a href="https://styleci.io/repos/75637284"><img src="https://styleci.io/repos/75637284/shield" alt="StyleCI" /></a>
+    <a href="https://styleci.io/repos/206591611"><img src="https://styleci.io/repos/206591611/shield" alt="StyleCI" /></a>
     <a href="https://packagist.org/packages/andrey-helldar/blacklist-server"><img src="https://img.shields.io/packagist/dt/andrey-helldar/blacklist-server.svg?style=flat-square" alt="Total Downloads" /></a>
     <a href="https://packagist.org/packages/andrey-helldar/blacklist-server"><img src="https://poser.pugx.org/andrey-helldar/blacklist-server/v/stable?format=flat-square" alt="Latest Stable Version" /></a>
     <a href="https://packagist.org/packages/andrey-helldar/blacklist-server"><img src="https://poser.pugx.org/andrey-helldar/blacklist-server/v/unstable?format=flat-square" alt="Latest Unstable Version" /></a>
