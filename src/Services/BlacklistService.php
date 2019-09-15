@@ -3,19 +3,19 @@
 namespace Helldar\BlacklistServer\Services;
 
 use Carbon\Carbon;
+use function compact;
+use function config;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
-use Helldar\BlacklistServer\Contracts\Service;
+
 use Helldar\BlacklistServer\Models\Blacklist;
 use Illuminate\Database\Eloquent\Builder;
-
-use function compact;
-use function config;
 
 class BlacklistService implements ServiceContract
 {
     protected $ttl;
+
     protected $ttl_multiplier;
 
     public function __construct()
@@ -25,11 +25,11 @@ class BlacklistService implements ServiceContract
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
-    public function store(string $type, string $value)
-    : Blacklist {
+    public function store(string $type, string $value): Blacklist
+    {
         $this->validate($type, $value);
 
-        if (! $this->exists($value, false)) {
+        if (!$this->exists($value, false)) {
             $ttl = $this->ttl;
 
             return Blacklist::create(compact('type', 'value', 'ttl'));
@@ -48,10 +48,11 @@ class BlacklistService implements ServiceContract
      * @param string $value
      *
      * @throws BlacklistDetectedException
+     *
      * @return bool
      */
-    public function check(string $value)
-    : bool {
+    public function check(string $value): bool
+    {
         $this->validate($type, $value, false);
 
         if ($this->exists($value)) {
@@ -61,8 +62,8 @@ class BlacklistService implements ServiceContract
         return true;
     }
 
-    public function exists(string $value, bool $only_actually = true)
-    : bool {
+    public function exists(string $value, bool $only_actually = true): bool
+    {
         return Blacklist::query()
             ->where('value', $value)
             ->where(function (Builder $builder) use ($only_actually) {
