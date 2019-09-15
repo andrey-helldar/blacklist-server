@@ -3,6 +3,7 @@
 namespace Helldar\BlacklistServer\Services;
 
 use Carbon\Carbon;
+use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Contracts\Service;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use function compact;
 use function config;
 
-class BlacklistService implements Service
+class BlacklistService implements ServiceContract
 {
     protected $ttl;
     protected $ttl_multiplier;
