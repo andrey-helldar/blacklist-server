@@ -3,10 +3,10 @@
 namespace Helldar\BlacklistServer\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-
 use function config;
+use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Support\Str;
 use function trim;
 
 class Blacklist extends Model
