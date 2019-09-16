@@ -39,7 +39,8 @@ class HostTest extends TestCase
     {
         try {
             Host::store($this->foo);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value is not a valid URL.', Arr::first($errors));
@@ -50,7 +51,8 @@ class HostTest extends TestCase
     {
         try {
             Host::store();
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value field is required.', Arr::first($errors));
@@ -86,7 +88,8 @@ class HostTest extends TestCase
     {
         try {
             Host::delete($this->foo);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value is not a valid URL.', Arr::first($errors));
@@ -97,7 +100,8 @@ class HostTest extends TestCase
     {
         try {
             Host::delete();
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value field is required.', Arr::first($errors));
@@ -134,7 +138,8 @@ class HostTest extends TestCase
     {
         try {
             Host::exists($this->foo);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value is not a valid URL.', Arr::first($errors));
@@ -145,7 +150,8 @@ class HostTest extends TestCase
     {
         try {
             Host::exists();
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value field is required.', Arr::first($errors));

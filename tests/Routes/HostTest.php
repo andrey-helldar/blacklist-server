@@ -7,6 +7,9 @@ use Helldar\BlacklistServer\Facades\Host;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
+use function json_encode;
+use function trim;
+
 class HostTest extends TestCase
 {
     protected $correct = 'http://example.com';
@@ -20,13 +23,13 @@ class HostTest extends TestCase
         Host::store($this->correct);
 
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->correct,
+            'type'  => 'host',
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
         $result->assertJsonStructure(['value', 'expired_at', 'created_at', 'updated_at']);
-        $result->assertSee(\json_encode($this->correct));
+        $result->assertSee(json_encode($this->correct));
     }
 
     public function testStoreFailValidation()
@@ -37,16 +40,16 @@ class HostTest extends TestCase
         Host::store($this->foo);
 
         $this->call('POST', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->correct,
+            'type'  => 'host',
+            'value' => $this->correct,
         ]);
     }
 
     public function testStoreFailSourceMessage()
     {
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->foo,
+            'type'  => 'host',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -74,12 +77,12 @@ class HostTest extends TestCase
         Host::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->correct,
+            'type'  => 'host',
+            'value' => $this->correct,
         ]);
 
-        $host = \json_encode($this->correct);
-        $host = \trim($host, '"');
+        $host = json_encode($this->correct);
+        $host = trim($host, '"');
 
         $result->assertStatus(423);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
@@ -91,8 +94,8 @@ class HostTest extends TestCase
         Host::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'host',
-            'value'  => 'http://foo.example.com',
+            'type'  => 'host',
+            'value' => 'http://foo.example.com',
         ]);
 
         $result->assertStatus(200);
@@ -104,8 +107,8 @@ class HostTest extends TestCase
         Host::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->incorrect,
+            'type'  => 'host',
+            'value' => $this->incorrect,
         ]);
 
         $result->assertStatus(400);
@@ -121,16 +124,16 @@ class HostTest extends TestCase
         Host::store($this->foo);
 
         $this->call('GET', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->correct,
+            'type'  => 'host',
+            'value' => $this->correct,
         ]);
     }
 
     public function testCheckFailSourceMessage()
     {
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'host',
-            'value'  => $this->foo,
+            'type'  => 'host',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);

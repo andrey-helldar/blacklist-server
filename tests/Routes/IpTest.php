@@ -7,6 +7,9 @@ use Helldar\BlacklistServer\Facades\Ip;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
+use function json_encode;
+use function trim;
+
 class IpTest extends TestCase
 {
     protected $correct = '192.168.1.1';
@@ -20,13 +23,13 @@ class IpTest extends TestCase
         Ip::store($this->correct);
 
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->correct,
+            'type'  => 'ip',
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
         $result->assertJsonStructure(['value', 'expired_at', 'created_at', 'updated_at']);
-        $result->assertSee(\json_encode($this->correct));
+        $result->assertSee(json_encode($this->correct));
     }
 
     public function testStoreFailValidation()
@@ -37,16 +40,16 @@ class IpTest extends TestCase
         Ip::store($this->foo);
 
         $this->call('POST', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->correct,
+            'type'  => 'ip',
+            'value' => $this->correct,
         ]);
     }
 
     public function testStoreFailSourceMessage()
     {
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->foo,
+            'type'  => 'ip',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -74,12 +77,12 @@ class IpTest extends TestCase
         Ip::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->correct,
+            'type'  => 'ip',
+            'value' => $this->correct,
         ]);
 
-        $ip = \json_encode($this->correct);
-        $ip = \trim($ip, '"');
+        $ip = json_encode($this->correct);
+        $ip = trim($ip, '"');
 
         $result->assertStatus(423);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
@@ -91,8 +94,8 @@ class IpTest extends TestCase
         Ip::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'ip',
-            'value'  => '192.100.100.100',
+            'type'  => 'ip',
+            'value' => '192.100.100.100',
         ]);
 
         $result->assertStatus(200);
@@ -104,8 +107,8 @@ class IpTest extends TestCase
         Ip::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->incorrect,
+            'type'  => 'ip',
+            'value' => $this->incorrect,
         ]);
 
         $result->assertStatus(400);
@@ -121,16 +124,16 @@ class IpTest extends TestCase
         Ip::store($this->foo);
 
         $this->call('GET', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->correct,
+            'type'  => 'ip',
+            'value' => $this->correct,
         ]);
     }
 
     public function testCheckFailSourceMessage()
     {
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'ip',
-            'value'  => $this->foo,
+            'type'  => 'ip',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);

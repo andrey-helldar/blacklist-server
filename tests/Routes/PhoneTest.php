@@ -5,8 +5,9 @@ namespace Tests\Routes;
 use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\Facades\Phone;
 use Illuminate\Validation\ValidationException;
-use function json_encode;
 use Tests\TestCase;
+
+use function json_encode;
 use function trim;
 
 class PhoneTest extends TestCase
@@ -22,8 +23,8 @@ class PhoneTest extends TestCase
         Phone::store($this->correct);
 
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'phone',
-            'value'  => $this->correct,
+            'type'  => 'phone',
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
@@ -39,16 +40,16 @@ class PhoneTest extends TestCase
         Phone::store($this->foo);
 
         $this->call('POST', Server::URI, [
-            'type'   => 'phone',
-            'value'  => $this->correct,
+            'type'  => 'phone',
+            'value' => $this->correct,
         ]);
     }
 
     public function testStoreFailSourceMessage()
     {
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'phone',
-            'value'  => $this->foo,
+            'type'  => 'phone',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -76,8 +77,8 @@ class PhoneTest extends TestCase
         Phone::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'phone',
-            'value'  => $this->correct,
+            'type'  => 'phone',
+            'value' => $this->correct,
         ]);
 
         $phone = json_encode($this->correct);
@@ -93,8 +94,8 @@ class PhoneTest extends TestCase
         Phone::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'phone',
-            'value'  => '192.100.100.100',
+            'type'  => 'phone',
+            'value' => '192.100.100.100',
         ]);
 
         $result->assertStatus(200);
@@ -109,16 +110,16 @@ class PhoneTest extends TestCase
         Phone::store($this->foo);
 
         $this->call('GET', Server::URI, [
-            'type'   => 'phone',
-            'value'  => $this->correct,
+            'type'  => 'phone',
+            'value' => $this->correct,
         ]);
     }
 
     public function testCheckFailSourceMessage()
     {
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'phone',
-            'value'  => $this->foo,
+            'type'  => 'phone',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);

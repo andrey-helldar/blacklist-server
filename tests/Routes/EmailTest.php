@@ -20,8 +20,8 @@ class EmailTest extends TestCase
         Email::store($this->correct);
 
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->correct,
+            'type'  => 'email',
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(200);
@@ -37,16 +37,16 @@ class EmailTest extends TestCase
         Email::store($this->foo);
 
         $this->call('POST', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->correct,
+            'type'  => 'email',
+            'value' => $this->correct,
         ]);
     }
 
     public function testStoreFailSourceMessage()
     {
         $result = $this->call('POST', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->foo,
+            'type'  => 'email',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
@@ -78,8 +78,8 @@ class EmailTest extends TestCase
         Email::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->correct,
+            'type'  => 'email',
+            'value' => $this->correct,
         ]);
 
         $result->assertStatus(423);
@@ -92,8 +92,8 @@ class EmailTest extends TestCase
         Email::store($this->correct);
 
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->incorrect,
+            'type'  => 'email',
+            'value' => $this->incorrect,
         ]);
 
         $result->assertStatus(200);
@@ -108,16 +108,16 @@ class EmailTest extends TestCase
         Email::store($this->foo);
 
         $this->call('GET', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->correct,
+            'type'  => 'email',
+            'value' => $this->correct,
         ]);
     }
 
     public function testCheckFailSourceMessage()
     {
         $result = $this->call('GET', Server::URI, [
-            'type'   => 'email',
-            'value'  => $this->foo,
+            'type'  => 'email',
+            'value' => $this->foo,
         ]);
 
         $result->assertStatus(400);
