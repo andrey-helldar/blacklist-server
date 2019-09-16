@@ -3,14 +3,14 @@
 namespace Helldar\BlacklistServer\Services;
 
 use Carbon\Carbon;
+use function compact;
+use function config;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
+
 use Helldar\BlacklistServer\Models\Blacklist;
 use Illuminate\Database\Eloquent\Builder;
-
-use function compact;
-use function config;
 
 class BlacklistService implements ServiceContract
 {
@@ -29,7 +29,7 @@ class BlacklistService implements ServiceContract
     {
         $this->validate($type, $value);
 
-        if (! $this->exists($value, false)) {
+        if (!$this->exists($value, false)) {
             $ttl = $this->ttl;
 
             return Blacklist::create(compact('type', 'value', 'ttl'));
