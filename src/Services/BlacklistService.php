@@ -51,12 +51,12 @@ class BlacklistService implements ServiceContract
      *
      * @return bool
      */
-    public function check(string $value): bool
+    public function check(string $value = null): string
     {
-        $this->validate($type, $value, false);
+        $this->validate(\compact('value'), false);
 
         if ($this->exists($value)) {
-            throw new BlacklistDetectedException($type, $value);
+            throw new BlacklistDetectedException($value);
         }
 
         return true;
@@ -74,8 +74,8 @@ class BlacklistService implements ServiceContract
             ->exists();
     }
 
-    private function validate(string $type = null, string $value = null, bool $is_require_type = true)
+    private function validate(array $data, bool $is_require_type = true)
     {
-        Validator::validate($type, $value, $is_require_type);
+        Validator::validate($data, $is_require_type);
     }
 }
