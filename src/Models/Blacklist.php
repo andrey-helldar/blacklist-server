@@ -34,7 +34,7 @@ class Blacklist extends Model
         $this->setConnection(config('blacklist_server.connection', 'mysql'));
 
         parent::__construct(array_merge($attributes, [
-            'source' => request()->getClientIp() ?? '127.0.0.1',
+            'source' => request()->getClientIp() ?? null,
         ]));
     }
 
