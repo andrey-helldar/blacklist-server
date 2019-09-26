@@ -4,6 +4,7 @@ namespace Helldar\BlacklistServer\Http\Controllers;
 
 use Exception;
 use Helldar\BlacklistServer\Facades\Blacklist;
+use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,15 +21,12 @@ class IndexController extends Controller
 
     private $code = 200;
 
-    private $message;
+    private $message = 'ok';
 
     public function store(Request $request)
     {
         try {
-            $type  = $request->get('type');
-            $value = $request->get('value');
-
-            $this->message = Blacklist::store($type, $value);
+            $this->message = Blacklist::store($request);
         }
         catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
@@ -46,12 +44,7 @@ class IndexController extends Controller
     public function check(Request $request)
     {
         try {
-            $type  = $request->get('type');
-            $value = $request->get('value');
-
-            $this->message = Blacklist::check($type, $value)
-                ? 'ok'
-                : null;
+            Blacklist::check($request);
         }
         catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
@@ -68,7 +61,7 @@ class IndexController extends Controller
 
     private function response(): JsonResponse
     {
-        $message = is_array($this->message)
+        $message = is_array($this->message) || $this->message instanceof BlacklistModel
             ? $this->message
             : [$this->message];
 

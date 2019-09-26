@@ -8,6 +8,7 @@ use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 use function compact;
 use function config;
@@ -25,12 +26,15 @@ class BlacklistService implements ServiceContract
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
-    public function store(string $type, string $value): Blacklist
+    public function store(Request $request): Blacklist
     {
-        $this->validate($type, $value);
+        $this->validate($request);
+
+        $value = $request->get('value');
 
         if (! $this->exists($value, false)) {
-            $ttl = $this->ttl;
+            $type = $request->get('type');
+            $ttl  = $this->ttl;
 
             return Blacklist::create(compact('type', 'value', 'ttl'));
         }
@@ -45,21 +49,19 @@ class BlacklistService implements ServiceContract
     }
 
     /**
-     * @param string $value
+     * @param \Illuminate\Http\Request $request
      *
-     * @throws BlacklistDetectedException
-     *
-     * @return bool
+     * @throws \Helldar\BlacklistCore\Exceptions\BlacklistDetectedException
      */
-    public function check(string $value = null): string
+    public function check(Request $request): void
     {
-        $this->validate(\compact('value'), false);
+        $this->validate($request, false);
+
+        $value = $request->get('value');
 
         if ($this->exists($value)) {
             throw new BlacklistDetectedException($value);
         }
-
-        return true;
     }
 
     public function exists(string $value, bool $only_actually = true): bool
@@ -74,8 +76,8 @@ class BlacklistService implements ServiceContract
             ->exists();
     }
 
-    private function validate(array $data, bool $is_require_type = true)
+    private function validate(Request $request, bool $is_require_type = true)
     {
-        Validator::validate($data, $is_require_type);
+        Validator::validate($request, $is_require_type);
     }
 }

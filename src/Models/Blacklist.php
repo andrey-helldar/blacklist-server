@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+use function abs;
 use function array_merge;
 use function config;
 use function request;
@@ -50,8 +51,8 @@ class Blacklist extends Model
 
     protected function setTtlAttribute(int $value)
     {
-        $this->attributes['ttl'] = $value;
+        $this->attributes['ttl'] = abs($value);
 
-        $this->attributes['expired_at'] = Carbon::now()->addDays($value);
+        $this->attributes['expired_at'] = Carbon::now()->addDays(abs($value));
     }
 }
