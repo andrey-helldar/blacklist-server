@@ -47,7 +47,7 @@ class BlacklistService implements ServiceContract
         $this->checkSelfBlocking($value);
         $this->checkExceptBlocking($value);
 
-        if (!$this->exists($value, false)) {
+        if (! $this->exists($value, false)) {
             $type = Arr::get($data, 'type');
             $ttl  = $this->ttl;
 
@@ -56,7 +56,7 @@ class BlacklistService implements ServiceContract
 
         $item = Blacklist::findOrFail($value);
 
-        if (!$item->is_active) {
+        if (! $item->is_active) {
             $item->update([
                 'ttl' => $item->ttl * $this->ttl_multiplier,
             ]);
