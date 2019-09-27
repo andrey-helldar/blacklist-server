@@ -52,19 +52,5 @@
                 "Helldar\\BlacklistServer\\ServiceProvider"
             ]
         }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../blacklist-client"
-        },
-        {
-            "type": "path",
-            "url": "../blacklist-core"
-        },
-        {
-            "type": "path",
-            "url": "../blacklist-server"
-        }
-    ]
+    }
 }
