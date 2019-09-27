@@ -51,37 +51,51 @@ After installation, your application will accept incoming requests for the creat
 
 | field | required | comment |
 |---|---|---|
-| type | yes | available is: "email", "host", "ip", "phone" |
+| type | sometimes | available is: "email", "host", "ip", "phone" |
 | value | yes | string |
 
 In order for the server part to be able to add or check spammers on its own, you can install package [andrey-helldar/blacklist-client](https://github.com/andrey-helldar/blacklist-client) on it or go the more complicated way using facades:
 
 ```php
-use Helldar\BlacklistServer\Facades\Email;
-use Helldar\BlacklistServer\Facades\Host;
-use Helldar\BlacklistServer\Facades\Ip;
-use Helldar\BlacklistServer\Facades\Phone;
+use Helldar\BlacklistServer\Facades\Blacklist;
 
-return Email::store('foo@example.com') : Helldar\BlacklistServer\Models\Email
-return Email::exists('foo@example.com') : bool
+return Blacklist::store('foo@example.com') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::check('foo@example.com') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
+return Blacklist::exists('foo@example.com') : bool
 
-return Host::store('http://example.com') : Helldar\BlacklistServer\Models\Host
-return Host::exists('http://example.com') : bool
+return Blacklist::store('http://example.com') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::check('http://example.com') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
+return Blacklist::exists('http://example.com') : bool
 
-return Ip::store('192.168.1.1') : Helldar\BlacklistServer\Models\Ip
-return Ip::exists('192.168.1.1') : bool
+return Blacklist::store('192.168.1.1') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::check('192.168.1.1') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
+return Blacklist::exists('192.168.1.1') : bool
 
-return Phone::store('+0 (000) 000-00-00') : Helldar\BlacklistServer\Models\Phone
-return Phone::exists('+0 (000) 000-00-00') : bool
+return Blacklist::store('+0 (000) 000-00-00') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::check('+0 (000) 000-00-00') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
+return Blacklist::exists('+0 (000) 000-00-00') : bool
 ```
 
 However, we recommend using the [client](https://github.com/andrey-helldar/blacklist-client).
 
 ### store
 
-When sending a POST request to the address of server `https://<your-site>/api/blacklist` with the correct data, it will return a JSON object:
+When sending a POST request to the address of server `https://<your-site>/api/blacklist` with the correct data.
+Foe example:
+```
+POST https://<your-site>/api/blacklist
+Content-Type: application/json
+
+{
+  "type": "email",
+  "value": "foo@example.com"
+}
+```
+
+It will return a JSON object:
 ```json
 {
+  "type": "email",
   "value": "foo@example.com",
   "expired_at": "2024-05-11 16:41:04",
   "created_at": "2019-09-14 11:45:04",
@@ -94,7 +108,7 @@ If the data being sent is filled incorrectly, the server will return an error wi
 {
   "error": {
     "code": 400,
-    "msg": "<message of the error>"
+    "msg": ["<message of the error>"]
   }
 }
 ```
@@ -104,7 +118,7 @@ For example:
 {
   "error": {
     "code": 400,
-    "msg": "The type must be one of email, host, phone or ip, null given."
+    "msg": ["The type must be one of email, host, phone or ip, null given."]
   }
 }
 ```
@@ -121,7 +135,7 @@ If the requested data is found in the database, the site will return the code 42
 {
   "error": {
     "code": 423,
-    "msg": "Checked email foo@example.com was found in our database."
+    "msg": ["Checked email foo@example.com was found in our database."]
   }
 }
 ```
@@ -139,7 +153,7 @@ For example:
 {
   "error": {
     "code": 400,
-    "msg": "The type must be one of email, host, phone or ip, null given."
+    "msg": ["The type must be one of email, host, phone or ip, null given."]
   }
 }
 ```
