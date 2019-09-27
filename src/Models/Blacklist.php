@@ -16,6 +16,8 @@ class Blacklist extends Model
 {
     public $incrementing = false;
 
+    protected $appends = ['is_active'];
+
     protected $casts = [
         'ttl' => 'integer',
     ];
@@ -24,7 +26,7 @@ class Blacklist extends Model
 
     protected $fillable = ['value', 'type', 'ttl', 'source', 'expired_at'];
 
-    protected $hidden = ['ttl', 'source'];
+    protected $hidden = ['ttl', 'source', 'is_active'];
 
     protected $keyType = 'string';
 
@@ -54,5 +56,10 @@ class Blacklist extends Model
         $this->attributes['ttl'] = abs($value);
 
         $this->attributes['expired_at'] = Carbon::now()->addDays(abs($value));
+    }
+
+    protected function getIsActiveAttribute(): bool
+    {
+        return $this->expired_at > Carbon::now();
     }
 }
