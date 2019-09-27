@@ -43,4 +43,17 @@ return [
 
     'ttl_multiplier' => 3,
 
+    /*
+     * The values shown here will not be blacklisted.
+     *
+     * By default, exceptions are added:
+     *   127.0.0.1
+     *   <ip-address of this server>
+     *   <hostname of this server>
+     *
+     * Default, [].
+     */
+
+    'except' => []
+
 ];

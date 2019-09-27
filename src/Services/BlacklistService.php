@@ -3,15 +3,19 @@
 namespace Helldar\BlacklistServer\Services;
 
 use Carbon\Carbon;
-use function compact;
-use function config;
+use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
+use Helldar\BlacklistCore\Exceptions\ExceptBlockingDetected;
+use Helldar\BlacklistCore\Exceptions\SelfBlockingDetected;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist;
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+
+use function compact;
+use function config;
+use function in_array;
 
 class BlacklistService implements ServiceContract
 {
@@ -26,13 +30,23 @@ class BlacklistService implements ServiceContract
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
+    /**
+     * @param array $data
+     *
+     * @throws ExceptBlockingDetected
+     * @throws SelfBlockingDetected
+     * @return Blacklist
+     */
     public function store(array $data): Blacklist
     {
         $this->validate($data);
 
         $value = Arr::get($data, 'value');
 
-        if (!$this->exists($value, false)) {
+        $this->checkSelfBlocking($value);
+        $this->checkExceptBlocking($value);
+
+        if (! $this->exists($value, false)) {
             $type = Arr::get($data, 'type');
             $ttl  = $this->ttl;
 
@@ -41,7 +55,7 @@ class BlacklistService implements ServiceContract
 
         $item = Blacklist::findOrFail($value);
 
-        if (!$item->is_active) {
+        if (! $item->is_active) {
             $item->update([
                 'ttl' => $item->ttl * $this->ttl_multiplier,
             ]);
@@ -79,5 +93,31 @@ class BlacklistService implements ServiceContract
     private function validate(array $data, bool $is_require_type = true)
     {
         Validator::validate($data, $is_require_type);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @throws SelfBlockingDetected
+     */
+    private function checkSelfBlocking(string $value)
+    {
+        if (in_array($value, Server::selfValues())) {
+            throw new SelfBlockingDetected($value);
+        }
+    }
+
+    /**
+     * @param string $value
+     *
+     * @throws ExceptBlockingDetected
+     */
+    private function checkExceptBlocking(string $value)
+    {
+        $except = config('blacklist_server.except', []);
+
+        if (in_array($value, $except)) {
+            throw new ExceptBlockingDetected($value);
+        }
     }
 }
