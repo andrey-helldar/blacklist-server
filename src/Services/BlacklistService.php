@@ -51,15 +51,13 @@ class BlacklistService implements ServiceContract
     }
 
     /**
-     * @param array $data
+     * @param string|null $value
      *
      * @throws \Helldar\BlacklistCore\Exceptions\BlacklistDetectedException
      */
-    public function check(array $data): void
+    public function check(string $value = null): void
     {
-        $this->validate($data, false);
-
-        $value = Arr::get($data, 'value');
+        $this->validate(compact('value'), false);
 
         if ($this->exists($value)) {
             throw new BlacklistDetectedException($value);

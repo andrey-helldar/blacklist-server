@@ -2,12 +2,9 @@
 
 namespace Tests\Facades;
 
-use Exception;
-use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
-use Illuminate\Support\Arr;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
+use TypeError;
 
 class ExistsTest extends TestCase
 {
@@ -31,27 +28,26 @@ class ExistsTest extends TestCase
         $this->assertEquals(false, $resultFalse);
     }
 
-    public function testFailValidationException()
+    public function testIncorrectArgument()
     {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The given data was invalid.');
+        $this->expectException(TypeError::class);
 
         Blacklist::exists([
-            'value' => $this->exists,
+            'value' => $this->incorrect,
         ]);
     }
 
-    public function testFailSourceMessage()
+    public function testFailValidationException()
     {
-        try {
-            Blacklist::exists([
-                'value' => $this->incorrect,
-            ]);
-        }
-        catch (Exception $exception) {
-            $errors = Validator::flatten($exception->errors());
+        Blacklist::store([
+            'type'  => 'email',
+            'value' => $this->exists,
+        ]);
 
-            $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
-        }
+        $returnTrue  = Blacklist::exists($this->exists);
+        $returnFalse = Blacklist::exists($this->not_exists);
+
+        $this->assertEquals(true, $returnTrue);
+        $this->assertEquals(false, $returnFalse);
     }
 }

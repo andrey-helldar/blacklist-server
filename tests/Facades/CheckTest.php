@@ -3,15 +3,14 @@
 namespace Tests\Facades;
 
 use ArgumentCountError;
-use Exception;
-use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
+use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
-use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
-class StoreTest extends TestCase
+class CheckTest extends TestCase
 {
     protected $exists = 'foo@example.com';
 
@@ -19,35 +18,37 @@ class StoreTest extends TestCase
 
     protected $not_exists = 'bar@example.com';
 
-    public function testSuccess()
+    public function testSuccessExists()
     {
-        $item = Blacklist::store([
+        $this->expectException(BlacklistDetectedException::class);
+
+        Blacklist::store([
             'type'  => 'email',
             'value' => $this->exists,
         ]);
 
-        $this->assertInstanceOf(BlacklistModel::class, $item);
+        Blacklist::check($this->exists);
+    }
 
-        $this->assertEquals($this->exists, $item->value);
+    public function testSuccessNotExists()
+    {
+        $result = Blacklist::check($this->not_exists);
+
+        $this->assertEquals(false, $result);
     }
 
     public function testFailValidationException()
     {
-        $this->expectException(UnknownTypeException::class);
-        $this->expectExceptionMessage('The type must be one of email, host, phone or ip, null given.');
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The given data was invalid.');
 
-        Blacklist::store([
-            'value' => $this->exists,
-        ]);
+        Blacklist::check(null);
     }
 
     public function testFailSourceMessage()
     {
         try {
-            Blacklist::store([
-                'type'  => 'email',
-                'value' => $this->incorrect,
-            ]);
+            Blacklist::check($this->incorrect);
         }
         catch (Exception $exception) {
             $errors = Validator::flatten($exception);

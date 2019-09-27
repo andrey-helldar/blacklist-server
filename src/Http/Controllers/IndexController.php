@@ -46,7 +46,7 @@ class IndexController extends Controller
     public function check(Request $request)
     {
         try {
-            Blacklist::check($request->all());
+            Blacklist::check($request->get('value'));
         }
         catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;

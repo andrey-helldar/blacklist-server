@@ -3,7 +3,6 @@
 namespace Tests\Routes;
 
 use Helldar\BlacklistCore\Constants\Server;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class StoreTest extends TestCase
@@ -26,21 +25,9 @@ class StoreTest extends TestCase
         $result->assertSee($this->exists);
     }
 
-    public function testFailValidation()
-    {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The given data was invalid.');
-
-        $this->call('POST', Server::URI, [
-            'type'  => 'email',
-            'value' => $this->incorrect,
-        ]);
-    }
-
-    public function testFailSourceMessage()
+    public function testFailEmptyType()
     {
         $result = $this->call('POST', Server::URI, [
-            'type'  => 'email',
             'value' => $this->incorrect,
         ]);
 
@@ -49,6 +36,20 @@ class StoreTest extends TestCase
         $result->assertJsonStructure([
             'error' => ['code', 'msg'],
         ]);
+
+        $result->assertSee('The type must be one of email, host, phone or ip, null given.');
+    }
+
+    public function testIncorrectValue()
+    {
+        $result = $this->call('POST', Server::URI, [
+            'type'  => 'email',
+            'value' => $this->incorrect,
+        ]);
+
+        $result->assertStatus(400);
+
+        $result->assertJsonStructure(['error' => ['code', 'msg']]);
 
         $result->assertSee('The value must be a valid email address.');
     }
@@ -63,6 +64,6 @@ class StoreTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The value field is required.');
+        $result->assertSee('The type must be one of email, host, phone or ip, null given.');
     }
 }
