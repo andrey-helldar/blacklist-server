@@ -54,6 +54,6 @@ return [
      * Default, [].
      */
 
-    'except' => []
+    'except' => [],
 
 ];

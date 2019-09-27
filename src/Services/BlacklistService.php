@@ -3,6 +3,8 @@
 namespace Helldar\BlacklistServer\Services;
 
 use Carbon\Carbon;
+use function compact;
+use function config;
 use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
@@ -10,11 +12,9 @@ use Helldar\BlacklistCore\Exceptions\ExceptBlockingDetected;
 use Helldar\BlacklistCore\Exceptions\SelfBlockingDetected;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
-
-use function compact;
-use function config;
 use function in_array;
 
 class BlacklistService implements ServiceContract
@@ -35,6 +35,7 @@ class BlacklistService implements ServiceContract
      *
      * @throws ExceptBlockingDetected
      * @throws SelfBlockingDetected
+     *
      * @return Blacklist
      */
     public function store(array $data): Blacklist
@@ -46,7 +47,7 @@ class BlacklistService implements ServiceContract
         $this->checkSelfBlocking($value);
         $this->checkExceptBlocking($value);
 
-        if (! $this->exists($value, false)) {
+        if (!$this->exists($value, false)) {
             $type = Arr::get($data, 'type');
             $ttl  = $this->ttl;
 
@@ -55,7 +56,7 @@ class BlacklistService implements ServiceContract
 
         $item = Blacklist::findOrFail($value);
 
-        if (! $item->is_active) {
+        if (!$item->is_active) {
             $item->update([
                 'ttl' => $item->ttl * $this->ttl_multiplier,
             ]);
