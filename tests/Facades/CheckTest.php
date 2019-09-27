@@ -49,8 +49,7 @@ class CheckTest extends TestCase
     {
         try {
             Blacklist::check($this->incorrect);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
