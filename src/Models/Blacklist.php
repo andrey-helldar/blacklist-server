@@ -2,13 +2,12 @@
 
 namespace Helldar\BlacklistServer\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+
 use function abs;
 use function array_merge;
-use Carbon\Carbon;
-
 use function config;
-use function config;
-use Illuminate\Database\Eloquent\Model;
 use function request;
 use function trim;
 

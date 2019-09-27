@@ -8,6 +8,9 @@ use Tests\TestCase;
 
 class RulesTest extends TestCase
 {
+    /**
+     * @throws \Helldar\BlacklistCore\Exceptions\UnknownTypeException
+     */
     public function testGet()
     {
         $this->assertEquals(['required', 'string', 'email', 'max:255'], Rules::get('email'));

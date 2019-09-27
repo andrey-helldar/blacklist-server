@@ -3,15 +3,15 @@
 namespace Helldar\BlacklistServer\Services;
 
 use Carbon\Carbon;
-use function compact;
-use function config;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist;
-
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+
+use function compact;
+use function config;
 
 class BlacklistService implements ServiceContract
 {
@@ -26,14 +26,14 @@ class BlacklistService implements ServiceContract
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
-    public function store(Request $request): Blacklist
+    public function store(array $data): Blacklist
     {
-        $this->validate($request);
+        $this->validate($data);
 
-        $value = $request->get('value');
+        $value = Arr::get($data, 'value');
 
-        if (!$this->exists($value, false)) {
-            $type = $request->get('type');
+        if (! $this->exists($value, false)) {
+            $type = Arr::get($data, 'type');
             $ttl  = $this->ttl;
 
             return Blacklist::create(compact('type', 'value', 'ttl'));
@@ -41,7 +41,7 @@ class BlacklistService implements ServiceContract
 
         $item = Blacklist::findOrFail($value);
 
-        if (!$item->is_active) {
+        if (! $item->is_active) {
             $item->update([
                 'ttl' => $item->ttl * $this->ttl_multiplier,
             ]);
@@ -51,15 +51,15 @@ class BlacklistService implements ServiceContract
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param array $data
      *
      * @throws \Helldar\BlacklistCore\Exceptions\BlacklistDetectedException
      */
-    public function check(Request $request): void
+    public function check(array $data): void
     {
-        $this->validate($request, false);
+        $this->validate($data, false);
 
-        $value = $request->get('value');
+        $value = Arr::get($data, 'value');
 
         if ($this->exists($value)) {
             throw new BlacklistDetectedException($value);
@@ -78,8 +78,8 @@ class BlacklistService implements ServiceContract
             ->exists();
     }
 
-    private function validate(Request $request, bool $is_require_type = true)
+    private function validate(array $data, bool $is_require_type = true)
     {
-        Validator::validate($request, $is_require_type);
+        Validator::validate($data, $is_require_type);
     }
 }

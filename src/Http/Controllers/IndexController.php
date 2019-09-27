@@ -2,8 +2,9 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
-use function api_response;
 use Exception;
+use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
+use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
 use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,9 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
-
-use function is_array;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+use function api_response;
+use function is_array;
 
 class IndexController extends Controller
 {
@@ -26,14 +28,17 @@ class IndexController extends Controller
     public function store(Request $request)
     {
         try {
-            $this->message = Blacklist::store($request);
-        } catch (ValidationException $exception) {
+            $this->message = Blacklist::store($request->all());
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
+        }
+        finally {
             return $this->response();
         }
     }
@@ -41,14 +46,39 @@ class IndexController extends Controller
     public function check(Request $request)
     {
         try {
-            Blacklist::check($request);
-        } catch (ValidationException $exception) {
+            Blacklist::check($request->all());
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
+        }
+        finally {
+            return $this->response();
+        }
+    }
+
+    public function exists(Request $request)
+    {
+        try {
+            Validator::validate($request->all(), false);
+
+            $value = $request->get('value');
+
+            $is_exists = Blacklist::exists($value);
+
+            if ($is_exists) {
+                throw new BlacklistDetectedException($value);
+            }
+        }
+        catch (Exception $exception) {
+            $this->code    = $exception->getCode() ?: 400;
+            $this->message = $exception->getMessage();
+        }
+        finally {
             return $this->response();
         }
     }
