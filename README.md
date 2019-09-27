@@ -109,6 +109,9 @@ If the data being sent is filled incorrectly, the server will return an error wi
   "error": {
     "code": 400,
     "msg": ["<message of the error>"]
+  },
+  "request": {
+    // incoming data
   }
 }
 ```
@@ -119,7 +122,11 @@ For example:
   "error": {
     "code": 400,
     "msg": ["The type must be one of email, host, phone or ip, null given."]
-  }
+  },
+ "request": {
+   "type": "foo",
+   "value": "foo@example.com"
+ }
 }
 ```
 
@@ -136,6 +143,9 @@ If the requested data is found in the database, the site will return the code 42
   "error": {
     "code": 423,
     "msg": ["Checked email foo@example.com was found in our database."]
+  },
+  "request": {
+    "value": "foo@example.com"
   }
 }
 ```
@@ -147,13 +157,18 @@ For example:
   "error": {
     "code": 400,
     "msg": ["The value field is required."]
-  }
+  },
+  "request": {}
 }
 
 {
   "error": {
     "code": 400,
     "msg": ["The type must be one of email, host, phone or ip, null given."]
+  },
+  "request": {
+    "type": "foo",
+    "value": "foo@example.com"
   }
 }
 ```

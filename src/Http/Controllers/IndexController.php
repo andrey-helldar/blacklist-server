@@ -2,7 +2,6 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
-use function api_response;
 use Exception;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
@@ -13,9 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
-
-use function is_array;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+use function api_response;
+use function is_array;
 
 class IndexController extends Controller
 {
@@ -25,17 +25,26 @@ class IndexController extends Controller
 
     private $message = 'ok';
 
+    private $additional_msg = [];
+
     public function store(Request $request)
     {
         try {
             $this->message = Blacklist::store($request->all());
-        } catch (ValidationException $exception) {
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        } catch (Exception $exception) {
+
+            Arr::set($this->additional_msg, 'request', $request->all());
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
+
+            Arr::set($this->additional_msg, 'request', $request->all());
+        }
+        finally {
             return $this->response();
         }
     }
@@ -44,13 +53,20 @@ class IndexController extends Controller
     {
         try {
             Blacklist::check($request->get('value'));
-        } catch (ValidationException $exception) {
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        } catch (Exception $exception) {
+
+            Arr::set($this->additional_msg, 'request', $request->all());
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
+
+            Arr::set($this->additional_msg, 'request', $request->all());
+        }
+        finally {
             return $this->response();
         }
     }
@@ -67,13 +83,20 @@ class IndexController extends Controller
             if ($is_exists) {
                 throw new BlacklistDetectedException($value);
             }
-        } catch (ValidationException $exception) {
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        } catch (Exception $exception) {
+
+            Arr::set($this->additional_msg, 'request', $request->all());
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        } finally {
+
+            Arr::set($this->additional_msg, 'request', $request->all());
+        }
+        finally {
             return $this->response();
         }
     }
@@ -84,6 +107,6 @@ class IndexController extends Controller
             ? $this->message
             : [$this->message];
 
-        return api_response($message, $this->code);
+        return api_response($message, $this->code, [], $this->additional_msg);
     }
 }
