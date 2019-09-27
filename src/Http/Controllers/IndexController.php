@@ -80,7 +80,7 @@ class IndexController extends Controller
 
     private function response(): JsonResponse
     {
-        $message = is_array($this->message) || $this->message instanceof BlacklistModel
+        $message = $this->code == 200 || is_array($this->message) || $this->message instanceof BlacklistModel
             ? $this->message
             : [$this->message];
 
