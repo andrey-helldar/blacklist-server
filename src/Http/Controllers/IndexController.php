@@ -74,6 +74,10 @@ class IndexController extends Controller
                 throw new BlacklistDetectedException($value);
             }
         }
+        catch (ValidationException $exception) {
+            $this->code    = $exception->getCode() ?: 400;
+            $this->message = Arr::flatten($exception->errors());
+        }
         catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();

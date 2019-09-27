@@ -50,6 +50,6 @@ class ExistsTest extends TestCase
 
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
 
-        $result->assertSee('The given data was invalid.');
+        $result->assertSee('The value field is required.');
     }
 }
