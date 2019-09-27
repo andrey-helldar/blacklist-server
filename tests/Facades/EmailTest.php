@@ -40,8 +40,7 @@ class EmailTest extends TestCase
     {
         try {
             Email::store($this->foo);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -52,8 +51,7 @@ class EmailTest extends TestCase
     {
         try {
             Email::store();
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value field is required.', Arr::first($errors));
@@ -88,8 +86,7 @@ class EmailTest extends TestCase
     {
         try {
             Email::delete($this->foo);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -100,8 +97,7 @@ class EmailTest extends TestCase
     {
         try {
             Email::delete();
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value field is required.', Arr::first($errors));
@@ -140,8 +136,7 @@ class EmailTest extends TestCase
     {
         try {
             Email::exists($this->foo);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -152,8 +147,7 @@ class EmailTest extends TestCase
     {
         try {
             Email::exists();
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception->errors());
 
             $this->assertEquals('The value field is required.', Arr::first($errors));

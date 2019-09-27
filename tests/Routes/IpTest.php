@@ -5,9 +5,9 @@ namespace Tests\Routes;
 use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistServer\Facades\Ip;
 use Illuminate\Validation\ValidationException;
-use Tests\TestCase;
-
 use function json_encode;
+
+use Tests\TestCase;
 use function trim;
 
 class IpTest extends TestCase
