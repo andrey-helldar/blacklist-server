@@ -4,47 +4,65 @@ enabled:
     - align_double_arrow
     - align_equals
     - align_phpdoc
+    - binary_operator_spaces
     - blank_line_after_opening_tag
     - blank_line_before_continue
     - blank_line_before_declare
+    - blank_line_before_return
     - blank_line_before_throw
     - blank_line_before_try
+    - cast_spaces
+    - compact_nullable_typehint
     - concat_with_spaces
     - const_separation
     - ereg_to_preg
     - extra_empty_lines
+    - is_null
     - lowercase_cast
+    - mb_str_functions
     - method_separation
-    - multiline_array_trailing_comma
     - no_empty_lines_after_phpdocs
     - no_empty_phpdoc
     - no_unused_imports
-    - operators_spaces
-    - ordered_use
+    - no_useless_else
+    - no_whitespace_before_comma_in_array
+    - no_whitespace_in_blank_line
+    - non_printable_character
+    - normalize_index_brace
+    - not_operator_with_successor_space
+    - object_operator_without_whitespace
     - phpdoc_indent
     - phpdoc_inline_tag
     - phpdoc_no_access
+    - phpdoc_no_empty_return
     - phpdoc_no_package
     - phpdoc_order
+    - phpdoc_return_self_reference
     - phpdoc_scalar
     - phpdoc_separation
+    - phpdoc_single_line_var_spacing
     - phpdoc_to_comment
     - phpdoc_trim
     - phpdoc_type_to_var
     - phpdoc_types
+    - phpdoc_types_order
     - phpdoc_var_without_name
     - property_separation
-    - return
+    - random_api_migration
     - return_type_declaration
     - self_accessor
     - short_array_syntax
     - short_bool_cast
+    - short_list_syntax
+    - short_scalar_cast
+    - single_blank_line_before_namespace
+    - single_line_class_definition
     - single_quote
     - spaces_after_semicolon
-    - spaces_cast
     - standardize_not_equal
     - ternary_spaces
+    - ternary_to_null_coalescing
+    - trailing_comma_in_multiline_array
     - trim_array_spaces
-    - unary_operators_spaces
+    - unary_operator_spaces
     - unneeded_control_parentheses
-    - whitespacy_lines
