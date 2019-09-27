@@ -1,64 +1,70 @@
 {
-  "name": "andrey-helldar/blacklist-server",
-  "description": "The blacklist server package",
-  "type": "library",
-  "license": "MIT",
-  "keywords": [
-    "spam",
-    "blacklist",
-    "blacklist",
-    "antispam",
-    "anti-spam",
-    "laravel",
-    "blacklist"
-  ],
-  "support": {
-    "issues": "https://github.com/andrey-helldar/blacklist-server/issues",
-    "source": "https://github.com/andrey-helldar/blacklist-server"
-  },
-  "authors": [
-    {
-      "name": "Andrey Helldar",
-      "email": "helldar@ai-rus.com"
-    }
-  ],
-  "require": {
-    "php": "^7.1.3",
-    "ext-json": "*",
-    "andrey-helldar/api-response": "^4.2",
-    "andrey-helldar/blacklist-core": "^1.0",
-    "laravel/framework": "^5.6|^6.0",
-    "nesbot/carbon": "^1.0|^2.0"
-  },
-  "require-dev": {
-    "orchestra/testbench": "^3.5|^4.0",
-    "phpunit/phpunit": "^7.0|^8.0"
-  },
-  "suggest": {
-    "andrey-helldar/blacklist-client": "The blacklist client package for connecting to the Blacklist Server",
-    "barryvdh/laravel-cors": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application"
-  },
-  "autoload": {
-    "psr-4": {
-      "Helldar\\BlacklistServer\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "config": {
-    "preferred-install": "dist",
-    "sort-packages": true
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true,
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Helldar\\BlacklistServer\\ServiceProvider"
-      ]
-    }
-  }
+    "name": "andrey-helldar/blacklist-server",
+    "description": "The blacklist server package",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["spam", "blacklist", "blacklist", "antispam", "anti-spam", "laravel", "blacklist"],
+    "support": {
+        "issues": "https://github.com/andrey-helldar/blacklist-server/issues",
+        "source": "https://github.com/andrey-helldar/blacklist-server"
+    },
+    "authors": [
+        {
+            "name": "Andrey Helldar",
+            "email": "helldar@ai-rus.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-json": "*",
+        "andrey-helldar/api-response": "^4.2",
+        "andrey-helldar/blacklist-core": "^1.1",
+        "laravel/framework": "^5.6|^6.0",
+        "nesbot/carbon": "^1.0|^2.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.5|^4.0",
+        "phpunit/phpunit": "^7.0|^8.0"
+    },
+    "suggest": {
+        "andrey-helldar/blacklist-client": "The blacklist client package for connecting to the Blacklist Server",
+        "barryvdh/laravel-cors": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application"
+    },
+    "autoload": {
+        "psr-4": {
+            "Helldar\\BlacklistServer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Helldar\\BlacklistServer\\ServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../blacklist-client"
+        },
+        {
+            "type": "path",
+            "url": "../blacklist-core"
+        },
+        {
+            "type": "path",
+            "url": "../blacklist-server"
+        }
+    ]
 }
