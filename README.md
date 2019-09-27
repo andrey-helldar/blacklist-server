@@ -59,19 +59,19 @@ In order for the server part to be able to add or check spammers on its own, you
 ```php
 use Helldar\BlacklistServer\Facades\Blacklist;
 
-return Blacklist::store('foo@example.com') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::store('foo@example.com', 'email') : Helldar\BlacklistServer\Models\Blacklist
 return Blacklist::check('foo@example.com') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
 return Blacklist::exists('foo@example.com') : bool
 
-return Blacklist::store('http://example.com') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::store('http://example.com', 'host') : Helldar\BlacklistServer\Models\Blacklist
 return Blacklist::check('http://example.com') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
 return Blacklist::exists('http://example.com') : bool
 
-return Blacklist::store('192.168.1.1') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::store('192.168.1.1', 'ip') : Helldar\BlacklistServer\Models\Blacklist
 return Blacklist::check('192.168.1.1') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
 return Blacklist::exists('192.168.1.1') : bool
 
-return Blacklist::store('+0 (000) 000-00-00') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::store('+0 (000) 000-00-00', 'phone') : Helldar\BlacklistServer\Models\Blacklist
 return Blacklist::check('+0 (000) 000-00-00') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
 return Blacklist::exists('+0 (000) 000-00-00') : bool
 ```
