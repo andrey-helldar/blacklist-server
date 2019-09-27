@@ -41,9 +41,11 @@ class BlacklistService implements ServiceContract
 
         $item = Blacklist::findOrFail($value);
 
-        $item->update([
-            'ttl' => $item->ttl * $this->ttl_multiplier,
-        ]);
+        if (! $item->is_active) {
+            $item->update([
+                'ttl' => $item->ttl * $this->ttl_multiplier,
+            ]);
+        }
 
         return $item;
     }
