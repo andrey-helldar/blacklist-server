@@ -2,6 +2,7 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
+use function api_response;
 use Exception;
 use Helldar\BlacklistServer\Facades\Blacklist;
 use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
@@ -10,10 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
-use function api_response;
 use function is_array;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends Controller
 {
@@ -27,16 +27,13 @@ class IndexController extends Controller
     {
         try {
             $this->message = Blacklist::store($request);
-        }
-        catch (ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        }
-        finally {
+        } finally {
             return $this->response();
         }
     }
@@ -45,16 +42,13 @@ class IndexController extends Controller
     {
         try {
             Blacklist::check($request);
-        }
-        catch (ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
-        }
-        finally {
+        } finally {
             return $this->response();
         }
     }
