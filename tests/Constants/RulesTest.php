@@ -17,7 +17,7 @@ class RulesTest extends TestCase
     {
         $this->assertEquals(['required', 'string', 'email', 'min:7', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('email'));
 
-        $this->assertEquals(['required', 'string', 'url', 'min:5', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('host'));
+        $this->assertEquals(['required', 'string', 'url', 'min:5', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('url'));
 
         $this->assertEquals(['required', 'string', 'min:4', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('phone'));
 
@@ -28,15 +28,15 @@ class RulesTest extends TestCase
 
     public function testKeys()
     {
-        $this->assertEquals(['email', 'host', 'phone', 'ip'], Types::get());
+        $this->assertEquals(['email', 'url', 'phone', 'ip'], Types::get());
     }
 
     public function testKeysDivided()
     {
-        $this->assertEquals('email, host, phone or ip', Types::getDivided());
+        $this->assertEquals('email, url, phone or ip', Types::getDivided());
 
-        $this->assertEquals('email, host, phone, ip', Types::getDivided(', ', ', '));
+        $this->assertEquals('email, url, phone, ip', Types::getDivided(', ', ', '));
 
-        $this->assertEquals('email or host or phone or ip', Types::getDivided(' or '));
+        $this->assertEquals('email or url or phone or ip', Types::getDivided(' or '));
     }
 }

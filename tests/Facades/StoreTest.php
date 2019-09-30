@@ -34,7 +34,7 @@ class StoreTest extends TestCase
     public function testFailValidationException()
     {
         $this->expectException(UnknownTypeException::class);
-        $this->expectExceptionMessage('The type must be one of email, host, phone or ip, null given.');
+        $this->expectExceptionMessage('The type must be one of email, url, phone or ip, null given.');
 
         Blacklist::store([
             'value' => $this->exists,
@@ -48,7 +48,8 @@ class StoreTest extends TestCase
                 'type'  => 'email',
                 'value' => $this->incorrect,
             ]);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -69,21 +70,23 @@ class StoreTest extends TestCase
                 'type'  => 'ip',
                 'value' => '127.0.0.1',
             ]);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('You are trying to block yourself!', Arr::first($errors));
         }
     }
 
-    public function testSelfBlockingHost()
+    public function testSelfBlockingUrl()
     {
         try {
             Blacklist::store([
-                'type'  => 'host',
+                'type'  => 'url',
                 'value' => 'http://localhost',
             ]);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('An attempt was made to block an excluded resource!', Arr::first($errors));

@@ -37,7 +37,7 @@ class StoreTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The type must be one of email, host, phone or ip, null given.');
+        $result->assertSee('The type must be one of email, url, phone or ip, null given.');
     }
 
     public function testIncorrectValue()
@@ -64,6 +64,6 @@ class StoreTest extends TestCase
             'error' => ['code', 'msg'],
         ]);
 
-        $result->assertSee('The type must be one of email, host, phone or ip, null given.');
+        $result->assertSee('The type must be one of email, url, phone or ip, null given.');
     }
 }

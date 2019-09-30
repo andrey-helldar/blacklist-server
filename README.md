@@ -51,7 +51,7 @@ After installation, your application will accept incoming requests for the creat
 
 | field | required | comment |
 |---|---|---|
-| type | sometimes | available is: "email", "host", "ip", "phone" |
+| type | sometimes | available is: "email", "url", "ip", "phone" |
 | value | yes | string |
 
 In order for the server part to be able to add or check spammers on its own, you can install package [andrey-helldar/blacklist-client](https://github.com/andrey-helldar/blacklist-client) on it or go the more complicated way using facades:
@@ -63,7 +63,7 @@ return Blacklist::store('foo@example.com', 'email') : Helldar\BlacklistServer\Mo
 return Blacklist::check('foo@example.com') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
 return Blacklist::exists('foo@example.com') : bool
 
-return Blacklist::store('http://example.com', 'host') : Helldar\BlacklistServer\Models\Blacklist
+return Blacklist::store('http://example.com', 'url') : Helldar\BlacklistServer\Models\Blacklist
 return Blacklist::check('http://example.com') // `false` if not exists and Helldar\BlacklistCore\Exceptions\BlacklistDetectedException if exists.
 return Blacklist::exists('http://example.com') : bool
 
@@ -121,7 +121,7 @@ For example:
 {
   "error": {
     "code": 400,
-    "msg": ["The type must be one of email, host, phone or ip, null given."]
+    "msg": ["The type must be one of email, url, phone or ip, null given."]
   },
  "request": {
    "type": "foo",
@@ -164,7 +164,7 @@ For example:
 {
   "error": {
     "code": 400,
-    "msg": ["The type must be one of email, host, phone or ip, null given."]
+    "msg": ["The type must be one of email, url, phone or ip, null given."]
   },
   "request": {
     "type": "foo",
