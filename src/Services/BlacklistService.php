@@ -5,7 +5,6 @@ namespace Helldar\BlacklistServer\Services;
 use Carbon\Carbon;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
-use Helldar\BlacklistCore\Facades\CheckBlocking;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,9 +31,6 @@ class BlacklistService implements ServiceContract
         $this->validate($data);
 
         $value = Arr::get($data, 'value');
-
-        CheckBlocking::selfBlocking($value);
-        CheckBlocking::exceptBlocking($value);
 
         if (! $this->exists($value, false)) {
             $type = Arr::get($data, 'type');
