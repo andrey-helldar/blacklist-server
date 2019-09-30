@@ -48,8 +48,7 @@ class StoreTest extends TestCase
                 'type'  => 'email',
                 'value' => $this->incorrect,
             ]);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -70,8 +69,7 @@ class StoreTest extends TestCase
                 'type'  => 'ip',
                 'value' => '127.0.0.1',
             ]);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('You are trying to block yourself!', Arr::first($errors));
@@ -85,8 +83,7 @@ class StoreTest extends TestCase
                 'type'  => 'host',
                 'value' => 'http://localhost',
             ]);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('An attempt was made to block an excluded resource!', Arr::first($errors));
