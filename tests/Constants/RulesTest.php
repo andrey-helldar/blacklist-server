@@ -4,6 +4,8 @@ namespace Tests\Constants;
 
 use Helldar\BlacklistCore\Constants\Rules;
 use Helldar\BlacklistCore\Constants\Types;
+use Helldar\BlacklistCore\Rules\ExceptBlocking;
+use Helldar\BlacklistCore\Rules\SelfBlocking;
 use Tests\TestCase;
 
 class RulesTest extends TestCase
@@ -13,15 +15,15 @@ class RulesTest extends TestCase
      */
     public function testGet()
     {
-        $this->assertEquals(['required', 'string', 'email', 'min:7', 'max:255'], Rules::get('email'));
+        $this->assertEquals(['required', 'string', 'email', 'min:7', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('email'));
 
-        $this->assertEquals(['required', 'string', 'url', 'min:5', 'max:255'], Rules::get('host'));
+        $this->assertEquals(['required', 'string', 'url', 'min:5', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('host'));
 
-        $this->assertEquals(['required', 'string', 'min:4', 'max:255'], Rules::get('phone'));
+        $this->assertEquals(['required', 'string', 'min:4', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('phone'));
 
-        $this->assertEquals(['required', 'ip'], Rules::get('ip'));
+        $this->assertEquals(['required', 'string', 'ip', new SelfBlocking(), new ExceptBlocking()], Rules::get('ip'));
 
-        $this->assertEquals(['required', 'string', 'min:4', 'max:255'], Rules::get('foo'));
+        $this->assertEquals(['required', 'string', 'min:4', 'max:255', new SelfBlocking(), new ExceptBlocking()], Rules::get('foo'));
     }
 
     public function testKeys()

@@ -22,6 +22,7 @@ class CheckTest extends TestCase
     public function testSuccessExists()
     {
         $this->expectException(BlacklistDetectedException::class);
+        $this->expectExceptionMessage("Checked {$this->exists} was found in our database.");
 
         Blacklist::store([
             'type'  => 'email',
@@ -50,7 +51,8 @@ class CheckTest extends TestCase
     {
         try {
             Blacklist::check($this->incorrect);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be at least 4 characters.', Arr::first($errors));
