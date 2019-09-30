@@ -4,6 +4,7 @@ namespace Tests\Facades;
 
 use ArgumentCountError;
 use Exception;
+use Helldar\BlacklistCore\Exceptions\SelfBlockingDetected;
 use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
@@ -48,7 +49,8 @@ class StoreTest extends TestCase
                 'type'  => 'email',
                 'value' => $this->incorrect,
             ]);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -60,5 +62,27 @@ class StoreTest extends TestCase
         $this->expectException(ArgumentCountError::class);
 
         Blacklist::store();
+    }
+
+    public function testSelfBlockingIp()
+    {
+        $this->expectException(SelfBlockingDetected::class);
+        $this->expectExceptionMessage('You are trying to block yourself! (127.0.0.1)');
+
+        Blacklist::store([
+            'type'  => 'ip',
+            'value' => '127.0.0.1',
+        ]);
+    }
+
+    public function testSelfBlockingHost()
+    {
+        $this->expectException(SelfBlockingDetected::class);
+        $this->expectExceptionMessage('You are trying to block yourself! (localhost)');
+
+        Blacklist::store([
+            'type'  => 'host',
+            'value' => 'localhost',
+        ]);
     }
 }
