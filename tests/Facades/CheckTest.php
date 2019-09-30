@@ -3,6 +3,7 @@
 namespace Tests\Facades;
 
 use ArgumentCountError;
+use Exception;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
@@ -49,10 +50,11 @@ class CheckTest extends TestCase
     {
         try {
             Blacklist::check($this->incorrect);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
-            $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
+            $this->assertEquals('The value must be at least 4 characters.', Arr::first($errors));
         }
     }
 

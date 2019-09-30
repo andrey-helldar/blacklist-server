@@ -13,15 +13,15 @@ class RulesTest extends TestCase
      */
     public function testGet()
     {
-        $this->assertEquals(['required', 'string', 'email', 'max:255'], Rules::get('email'));
+        $this->assertEquals(['required', 'string', 'email', 'min:7', 'max:255'], Rules::get('email'));
 
-        $this->assertEquals(['required', 'string', 'url', 'max:255'], Rules::get('host'));
+        $this->assertEquals(['required', 'string', 'url', 'min:5', 'max:255'], Rules::get('host'));
 
-        $this->assertEquals(['required', 'string', 'max:255'], Rules::get('phone'));
+        $this->assertEquals(['required', 'string', 'min:4', 'max:255'], Rules::get('phone'));
 
         $this->assertEquals(['required', 'ip'], Rules::get('ip'));
 
-        $this->assertEquals(['required', 'string', 'max:255'], Rules::get('foo'));
+        $this->assertEquals(['required', 'string', 'min:4', 'max:255'], Rules::get('foo'));
     }
 
     public function testKeys()
