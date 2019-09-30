@@ -51,8 +51,7 @@ class CheckTest extends TestCase
     {
         try {
             Blacklist::check($this->incorrect);
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be at least 4 characters.', Arr::first($errors));
