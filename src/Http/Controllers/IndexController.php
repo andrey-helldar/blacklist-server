@@ -2,46 +2,52 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
-use function api_response;
 use Exception;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
-use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
+use Helldar\BlacklistServer\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
-
-use function is_array;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+use function api_response;
+use function is_array;
 
 class IndexController extends Controller
 {
     use ValidatesRequests;
 
+    private $additional_msg = [];
+
     private $code = 200;
 
     private $message = 'ok';
 
-    private $additional_msg = [];
-
     public function store(Request $request)
     {
         try {
-            $this->message = Blacklist::store($request->all());
-        } catch (ValidationException $exception) {
+            $value = $request->get('value');
+            $type  = $request->get('type');
+
+            $this->message = Blacklist::store($value, $type);
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        } finally {
+        }
+        finally {
             return $this->response();
         }
     }
@@ -49,18 +55,24 @@ class IndexController extends Controller
     public function check(Request $request)
     {
         try {
-            Blacklist::check($request->get('value'));
-        } catch (ValidationException $exception) {
+            $value = $request->get('value');
+            $type  = $request->get('type');
+
+            Blacklist::check($value, $type);
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        } finally {
+        }
+        finally {
             return $this->response();
         }
     }
@@ -71,23 +83,27 @@ class IndexController extends Controller
             Validator::validate($request->all(), false);
 
             $value = $request->get('value');
+            $type  = $request->get('type');
 
-            $is_exists = Blacklist::exists($value);
+            $is_exists = Blacklist::exists($value, $type);
 
             if ($is_exists) {
                 throw new BlacklistDetectedException($value);
             }
-        } catch (ValidationException $exception) {
+        }
+        catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        } finally {
+        }
+        finally {
             return $this->response();
         }
     }

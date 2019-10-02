@@ -16,10 +16,7 @@ class ExistsTest extends TestCase
 
     public function testSuccess()
     {
-        Blacklist::store([
-            'type'  => 'email',
-            'value' => $this->exists,
-        ]);
+        Blacklist::store($this->exists, 'email');
 
         $resultTrue  = Blacklist::exists($this->exists);
         $resultFalse = Blacklist::exists($this->not_exists);
@@ -32,17 +29,12 @@ class ExistsTest extends TestCase
     {
         $this->expectException(TypeError::class);
 
-        Blacklist::exists([
-            'value' => $this->incorrect,
-        ]);
+        Blacklist::exists($this->incorrect);
     }
 
     public function testFailValidationException()
     {
-        Blacklist::store([
-            'type'  => 'email',
-            'value' => $this->exists,
-        ]);
+        Blacklist::store($this->exists, 'email');
 
         $returnTrue  = Blacklist::exists($this->exists);
         $returnFalse = Blacklist::exists($this->not_exists);
