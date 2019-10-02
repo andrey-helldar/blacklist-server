@@ -86,7 +86,7 @@ class StoreTest extends TestCase
         } catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
-            $this->assertEquals('An attempt was made to block an excluded resource!', Arr::first($errors));
+            $this->assertEquals('You are trying to block yourself!', Arr::first($errors));
         }
     }
 }
