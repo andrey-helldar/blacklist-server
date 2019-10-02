@@ -34,20 +34,17 @@ class IndexController extends Controller
             $type  = $request->get('type');
 
             $this->message = Blacklist::store($value, $type);
-        }
-        catch (ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        }
-        finally {
+        } finally {
             return $this->response();
         }
     }
@@ -59,20 +56,17 @@ class IndexController extends Controller
             $type  = $request->get('type');
 
             Blacklist::check($value, $type);
-        }
-        catch (ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        }
-        finally {
+        } finally {
             return $this->response();
         }
     }
@@ -90,20 +84,17 @@ class IndexController extends Controller
             if ($is_exists) {
                 throw new BlacklistDetectedException($value);
             }
-        }
-        catch (ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = Arr::flatten($exception->errors());
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        }
-        catch (Exception $exception) {
+        } catch (Exception $exception) {
             $this->code    = $exception->getCode() ?: 400;
             $this->message = $exception->getMessage();
 
             Arr::set($this->additional_msg, 'request', $request->all());
-        }
-        finally {
+        } finally {
             return $this->response();
         }
     }
