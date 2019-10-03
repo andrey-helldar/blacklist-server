@@ -28,7 +28,8 @@ class BlacklistService implements ServiceContract
         $this->validate(compact('value', 'type'));
 
         if (! $this->exists($value, false)) {
-            $ttl = $this->ttl;
+            $ttl   = $this->ttl;
+            $value = $this->clearPhone($value);
 
             return Blacklist::create(compact('type', 'value', 'ttl'));
         }
@@ -61,6 +62,8 @@ class BlacklistService implements ServiceContract
 
     public function exists(string $value, string $type = null): bool
     {
+        $value = $this->clearPhone($value, $type);
+
         return Blacklist::query()
             ->where('value', $value)
             ->exists();
@@ -69,5 +72,14 @@ class BlacklistService implements ServiceContract
     private function validate(array $data, bool $is_require_type = true)
     {
         Validator::validate($data, $is_require_type);
+    }
+
+    private function clearPhone(string $value, string $type = null): string
+    {
+        if ($type !== 'phone') {
+            return \trim($value);
+        }
+
+        return (string) \preg_replace("/\D/", '', $value);
     }
 }
