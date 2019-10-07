@@ -5,10 +5,9 @@ namespace Tests\Facades;
 use ArgumentCountError;
 use Exception;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
-use Helldar\BlacklistCore\Facades\Validator;
 use Helldar\BlacklistServer\Facades\Blacklist;
+use Helldar\BlacklistServer\Facades\Validator;
 use Illuminate\Support\Arr;
-use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 class CheckTest extends TestCase
@@ -24,10 +23,7 @@ class CheckTest extends TestCase
         $this->expectException(BlacklistDetectedException::class);
         $this->expectExceptionMessage("Checked {$this->exists} was found in our database.");
 
-        Blacklist::store([
-            'type'  => 'email',
-            'value' => $this->exists,
-        ]);
+        Blacklist::store($this->exists, 'email');
 
         Blacklist::check($this->exists);
     }
@@ -41,8 +37,7 @@ class CheckTest extends TestCase
 
     public function testFailValidationException()
     {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The given data was invalid.');
+        $this->expectException(\TypeError::class);
 
         Blacklist::check(null);
     }

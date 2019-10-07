@@ -31,7 +31,7 @@ Instead, you may of course manually update your require block and run `composer 
 ```json
 {
     "require": {
-        "andrey-helldar/blacklist-server": "^1.0"
+        "andrey-helldar/blacklist-server": "^2.0"
     }
 }
 ```

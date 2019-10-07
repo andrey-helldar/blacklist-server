@@ -2,13 +2,10 @@
 
 namespace Helldar\BlacklistServer\Services;
 
-use Carbon\Carbon;
 use Helldar\BlacklistCore\Contracts\ServiceContract;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
-use Helldar\BlacklistCore\Facades\Validator;
+use Helldar\BlacklistServer\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 
 use function compact;
 use function config;
@@ -26,15 +23,13 @@ class BlacklistService implements ServiceContract
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
     }
 
-    public function store(array $data): Blacklist
+    public function store(string $value, string $type): Blacklist
     {
-        $this->validate($data);
-
-        $value = Arr::get($data, 'value');
+        $this->validate(compact('value', 'type'));
 
         if (! $this->exists($value, false)) {
-            $type = Arr::get($data, 'type');
-            $ttl  = $this->ttl;
+            $ttl   = $this->ttl;
+            $value = $this->clearPhone($value);
 
             return Blacklist::create(compact('type', 'value', 'ttl'));
         }
@@ -51,33 +46,40 @@ class BlacklistService implements ServiceContract
     }
 
     /**
-     * @param string|null $value
+     * @param string $value
+     * @param string|null $type
      *
      * @throws \Helldar\BlacklistCore\Exceptions\BlacklistDetectedException
      */
-    public function check(string $value = null): void
+    public function check(string $value, string $type = null): void
     {
-        $this->validate(compact('value'), false);
+        $this->validate(compact('value', 'type'), false);
 
         if ($this->exists($value)) {
             throw new BlacklistDetectedException($value);
         }
     }
 
-    public function exists(string $value, bool $only_actually = true): bool
+    public function exists(string $value, string $type = null): bool
     {
+        $value = $this->clearPhone($value, $type);
+
         return Blacklist::query()
             ->where('value', $value)
-            ->where(function (Builder $builder) use ($only_actually) {
-                if ($only_actually) {
-                    $builder->where('expired_at', '>', Carbon::now());
-                }
-            })
             ->exists();
     }
 
     private function validate(array $data, bool $is_require_type = true)
     {
         Validator::validate($data, $is_require_type);
+    }
+
+    private function clearPhone(string $value, string $type = null): string
+    {
+        if ($type !== 'phone') {
+            return \trim($value);
+        }
+
+        return (string) \preg_replace("/\D/", '', $value);
     }
 }

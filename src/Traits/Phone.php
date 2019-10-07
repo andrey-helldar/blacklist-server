@@ -2,12 +2,12 @@
 
 namespace Helldar\BlacklistServer\Traits;
 
-use Illuminate\Support\Str;
+use Helldar\BlacklistCore\Helpers\Str;
 
 use function preg_replace;
 use function str_ireplace;
 
-class Phone
+trait Phone
 {
     protected function clear(string $phone = null): string
     {

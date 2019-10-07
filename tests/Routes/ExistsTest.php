@@ -18,10 +18,7 @@ class ExistsTest extends TestCase
 
     public function testSuccessExists()
     {
-        Blacklist::store([
-            'type'  => 'email',
-            'value' => $this->exists,
-        ]);
+        Blacklist::store($this->exists, 'email');
 
         $result = $this->call('GET', $this->url, [
             'value' => $this->exists,

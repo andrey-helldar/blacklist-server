@@ -4,8 +4,8 @@ namespace Tests\Constants;
 
 use Helldar\BlacklistCore\Constants\Rules;
 use Helldar\BlacklistCore\Constants\Types;
-use Helldar\BlacklistCore\Rules\ExceptBlocking;
-use Helldar\BlacklistCore\Rules\SelfBlocking;
+use Helldar\BlacklistServer\Rules\ExceptBlocking;
+use Helldar\BlacklistServer\Rules\SelfBlocking;
 use Tests\TestCase;
 
 class RulesTest extends TestCase
