@@ -18,9 +18,9 @@ class BlacklistService implements ServiceContract
 
     public function __construct()
     {
-        $this->ttl = (int) config('blacklist_server.ttl', 7);
+        $this->ttl = (int) config('blacklist_server.ttl', 3);
 
-        $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 3);
+        $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 2);
     }
 
     public function store(string $value, string $type): Blacklist
