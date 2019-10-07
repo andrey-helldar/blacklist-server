@@ -55,7 +55,7 @@ class Blacklist extends Model
     {
         $this->attributes['ttl'] = abs($value);
 
-        $this->attributes['expired_at'] = Carbon::now()->addDays(abs($value));
+        $this->attributes['expired_at'] = Carbon::now()->addMonths(abs($value));
     }
 
     protected function getIsActiveAttribute(): bool
