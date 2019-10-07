@@ -3,8 +3,8 @@
 namespace Tests\Facades;
 
 use Helldar\BlacklistServer\Facades\Blacklist;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
-use TypeError;
 
 class ExistsTest extends TestCase
 {
@@ -27,9 +27,10 @@ class ExistsTest extends TestCase
 
     public function testIncorrectArgument()
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The given data was invalid.');
 
-        Blacklist::exists($this->incorrect);
+        Blacklist::exists($this->incorrect, 'email');
     }
 
     public function testFailValidationException()

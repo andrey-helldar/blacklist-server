@@ -2,8 +2,8 @@
 
 namespace Tests\Facades;
 
-use ArgumentCountError;
 use Exception;
+use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
 use Helldar\BlacklistServer\Facades\Blacklist;
 use Helldar\BlacklistServer\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
@@ -29,7 +29,8 @@ class StoreTest extends TestCase
 
     public function testFailValidationException()
     {
-        $this->expectException(ArgumentCountError::class);
+        $this->expectException(UnknownTypeException::class);
+        $this->expectExceptionMessage('The type must be one of email, url, phone or ip, null given.');
 
         Blacklist::store($this->exists);
     }
@@ -47,7 +48,8 @@ class StoreTest extends TestCase
 
     public function testFailEmptySource()
     {
-        $this->expectException(ArgumentCountError::class);
+        $this->expectException(UnknownTypeException::class);
+        $this->expectExceptionMessage('The type must be one of email, url, phone or ip, null given.');
 
         Blacklist::store();
     }
