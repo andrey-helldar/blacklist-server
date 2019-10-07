@@ -2,8 +2,8 @@
 
 namespace Tests\Facades;
 
-use ArgumentCountError;
 use Exception;
+use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
 use Helldar\BlacklistServer\Facades\Blacklist;
 use Helldar\BlacklistServer\Facades\Validator;
 use Helldar\BlacklistServer\Models\Blacklist as BlacklistModel;
@@ -29,7 +29,8 @@ class StoreTest extends TestCase
 
     public function testFailValidationException()
     {
-        $this->expectException(ArgumentCountError::class);
+        $this->expectException(UnknownTypeException::class);
+        $this->expectExceptionMessage('The type must be one of email, url, phone or ip, null given.');
 
         Blacklist::store($this->exists);
     }
@@ -38,7 +39,8 @@ class StoreTest extends TestCase
     {
         try {
             Blacklist::store($this->incorrect, 'email');
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -47,7 +49,8 @@ class StoreTest extends TestCase
 
     public function testFailEmptySource()
     {
-        $this->expectException(ArgumentCountError::class);
+        $this->expectException(UnknownTypeException::class);
+        $this->expectExceptionMessage('The type must be one of email, url, phone or ip, null given.');
 
         Blacklist::store();
     }
@@ -56,7 +59,8 @@ class StoreTest extends TestCase
     {
         try {
             Blacklist::store('127.0.0.1', 'ip');
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('You are trying to block yourself!', Arr::first($errors));
@@ -67,7 +71,8 @@ class StoreTest extends TestCase
     {
         try {
             Blacklist::store('http://localhost', 'url');
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('You are trying to block yourself!', Arr::first($errors));

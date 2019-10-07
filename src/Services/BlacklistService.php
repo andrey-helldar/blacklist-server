@@ -23,7 +23,7 @@ class BlacklistService implements ServiceContract
         $this->ttl_multiplier = (int) config('blacklist_server.ttl_multiplier', 2);
     }
 
-    public function store(string $value, string $type): Blacklist
+    public function store(string $value = null, string $type = null): Blacklist
     {
         $this->validate(compact('value', 'type'));
 
@@ -46,12 +46,12 @@ class BlacklistService implements ServiceContract
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @param string|null $type
      *
      * @throws \Helldar\BlacklistCore\Exceptions\BlacklistDetectedException
      */
-    public function check(string $value, string $type = null): void
+    public function check(string $value = null, string $type = null): void
     {
         $this->validate(compact('value', 'type'), false);
 
@@ -60,8 +60,10 @@ class BlacklistService implements ServiceContract
         }
     }
 
-    public function exists(string $value, string $type = null): bool
+    public function exists(string $value = null, string $type = null): bool
     {
+        $this->validate(compact('value', 'type'), false);
+
         $value = $this->clearPhone($value, $type);
 
         return Blacklist::query()
