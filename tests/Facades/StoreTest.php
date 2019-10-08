@@ -3,6 +3,7 @@
 namespace Tests\Facades;
 
 use Exception;
+use Helldar\BlacklistCore\Exceptions\SelfBlockingException;
 use Helldar\BlacklistCore\Exceptions\UnknownTypeException;
 use Helldar\BlacklistServer\Facades\Blacklist;
 use Helldar\BlacklistServer\Facades\Validator;
@@ -59,9 +60,11 @@ class StoreTest extends TestCase
         try {
             Blacklist::store('127.0.0.1', 'ip');
         } catch (Exception $exception) {
-            $errors = Validator::flatten($exception);
+            $errors = $exception instanceof SelfBlockingException
+                ? $exception->getMessage()
+                : Arr::first(Validator::flatten($exception));
 
-            $this->assertEquals('You are trying to block yourself!', Arr::first($errors));
+            $this->assertEquals('You are trying to block yourself!', $errors);
         }
     }
 
@@ -70,9 +73,11 @@ class StoreTest extends TestCase
         try {
             Blacklist::store('http://localhost', 'url');
         } catch (Exception $exception) {
-            $errors = Validator::flatten($exception);
+            $errors = $exception instanceof SelfBlockingException
+                ? $exception->getMessage()
+                : Arr::first(Validator::flatten($exception));
 
-            $this->assertEquals('You are trying to block yourself!', Arr::first($errors));
+            $this->assertEquals('You are trying to block yourself!', $errors);
         }
     }
 }
