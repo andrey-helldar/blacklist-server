@@ -20,13 +20,25 @@ class CheckTest extends TestCase
     {
         Blacklist::store($this->exists, 'email');
 
-        $result = $this->call('GET', Server::URI . '/exists', [
+        $result = $this->call('GET', Server::URI, [
             'value' => $this->exists,
         ]);
 
         $result->assertStatus(423);
         $result->assertJsonStructure(['error' => ['code', 'msg']]);
         $result->assertSee("Checked {$this->exists} was found in our database.");
+    }
+
+    public function testSelfBlocking()
+    {
+        $result = $this->call('GET', Server::URI, [
+            'value' => 'http://localhost',
+            'type'  => 'url',
+        ]);
+
+        $result->assertStatus(422);
+        $result->assertJsonStructure(['error' => ['code', 'msg'], 'request' => ['value', 'type']]);
+        $result->assertSee('You are trying to block yourself!');
     }
 
     public function testSuccessNotExists()
