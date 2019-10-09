@@ -36,6 +36,20 @@ class CheckTest extends TestCase
         $this->assertEquals(false, $result);
     }
 
+    public function testSelfBlockingUrl()
+    {
+        Blacklist::check('http://localhost');
+
+        $this->assertEquals(true, true);
+    }
+
+    public function testSelfBlockingIp()
+    {
+        Blacklist::check('127.0.0.1');
+
+        $this->assertEquals(true, true);
+    }
+
     public function testFailValidationException()
     {
         $this->expectException(ValidationException::class);

@@ -14,22 +14,28 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
+use function filter_var;
+use function parse_url;
+
 class ValidationService
 {
     /**
      * @param array $data
      * @param bool $is_require_type
+     * @param bool $check_self_blocking
      *
      * @throws ExcludedBlockingDetectedException
      * @throws SelfBlockingException
      * @throws \Helldar\BlacklistCore\Exceptions\UnknownTypeException
      */
-    public function validate(array $data, bool $is_require_type = true)
+    public function validate(array $data, bool $is_require_type = true, bool $check_self_blocking = false)
     {
         $value = Arr::get($data, 'value');
 
-        $this->validateSelfBlocking($value);
-        $this->validateExcludedBlocking($value);
+        if ($check_self_blocking) {
+            $this->validateSelfBlocking($value);
+            $this->validateExcludedBlocking($value);
+        }
 
         $this->make($data, $is_require_type)
             ->validate();
@@ -87,6 +93,8 @@ class ValidationService
      */
     private function validateSelfBlocking(string $value = null)
     {
+        $value = $this->parse($value);
+
         foreach (Server::selfValues() as $self_value) {
             if (Str::is($self_value, $value)) {
                 throw new SelfBlockingException();
@@ -103,10 +111,24 @@ class ValidationService
     {
         $except = config('blacklist_server.except', []);
 
+        $value = $this->parse($value);
+
         foreach ($except as $item) {
             if (Str::is($item, $value)) {
                 throw new ExcludedBlockingDetectedException();
             }
         }
+    }
+
+    private function isUrl(string $value = null): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_URL) !== false;
+    }
+
+    private function parse(string $value = null): ?string
+    {
+        return $this->isUrl($value)
+            ? parse_url($value, PHP_URL_HOST)
+            : $value;
     }
 }

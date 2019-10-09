@@ -80,4 +80,15 @@ class StoreTest extends TestCase
             $this->assertEquals('You are trying to block yourself!', $errors);
         }
     }
+
+    public function testBlockResourcesStartingOnLocalhost()
+    {
+        $value = 'http://localhost.foo';
+
+        $item = Blacklist::store($value, 'url');
+
+        $this->assertInstanceOf(BlacklistModel::class, $item);
+
+        $this->assertEquals($value, $item->value);
+    }
 }

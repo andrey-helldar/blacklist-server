@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Validation\ValidationException;
 
 /**
- * @method static ValidationService validate(array $data, bool $is_require_type = true)
+ * @method static ValidationService validate(array $data, bool $is_require_type = true, bool $check_self_blocking = false)
  * @method static ValidatorContract make(array $data, bool $is_require_type = true)
  * @method static array flatten(ValidationException $exception)
  *
