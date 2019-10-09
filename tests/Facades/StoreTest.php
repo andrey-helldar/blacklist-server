@@ -40,7 +40,8 @@ class StoreTest extends TestCase
     {
         try {
             Blacklist::store($this->incorrect, 'email');
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be a valid email address.', Arr::first($errors));
@@ -59,7 +60,8 @@ class StoreTest extends TestCase
     {
         try {
             Blacklist::store('127.0.0.1', 'ip');
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = $exception instanceof SelfBlockingException
                 ? $exception->getMessage()
                 : Arr::first(Validator::flatten($exception));
@@ -72,12 +74,24 @@ class StoreTest extends TestCase
     {
         try {
             Blacklist::store('http://localhost', 'url');
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = $exception instanceof SelfBlockingException
                 ? $exception->getMessage()
                 : Arr::first(Validator::flatten($exception));
 
             $this->assertEquals('You are trying to block yourself!', $errors);
         }
+    }
+
+    public function testBlockResourcesStartingOnLocalhost()
+    {
+        $value = 'http://localhost.foo';
+
+        $item = Blacklist::store($value, 'url');
+
+        $this->assertInstanceOf(BlacklistModel::class, $item);
+
+        $this->assertEquals($value, $item->value);
     }
 }

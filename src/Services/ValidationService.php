@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
+use function filter_var;
+use function parse_url;
+
 class ValidationService
 {
     /**
@@ -90,6 +93,8 @@ class ValidationService
      */
     private function validateSelfBlocking(string $value = null)
     {
+        $value = $this->parse($value);
+
         foreach (Server::selfValues() as $self_value) {
             if (Str::is($self_value, $value)) {
                 throw new SelfBlockingException();
@@ -106,10 +111,24 @@ class ValidationService
     {
         $except = config('blacklist_server.except', []);
 
+        $value = $this->parse($value);
+
         foreach ($except as $item) {
             if (Str::is($item, $value)) {
                 throw new ExcludedBlockingDetectedException();
             }
         }
+    }
+
+    private function isUrl(string $value = null): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_URL) !== false;
+    }
+
+    private function parse(string $value = null): ?string
+    {
+        return $this->isUrl($value)
+            ? parse_url($value, PHP_URL_HOST)
+            : $value;
     }
 }
