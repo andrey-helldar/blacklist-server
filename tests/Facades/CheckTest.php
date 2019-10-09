@@ -36,6 +36,20 @@ class CheckTest extends TestCase
         $this->assertEquals(false, $result);
     }
 
+    public function testSelfBlockingUrl()
+    {
+        Blacklist::check('http://localhost');
+
+        $this->assertEquals(true, true);
+    }
+
+    public function testSelfBlockingIp()
+    {
+        Blacklist::check('127.0.0.1');
+
+        $this->assertEquals(true, true);
+    }
+
     public function testFailValidationException()
     {
         $this->expectException(ValidationException::class);
@@ -48,7 +62,8 @@ class CheckTest extends TestCase
     {
         try {
             Blacklist::check($this->incorrect);
-        } catch (Exception $exception) {
+        }
+        catch (Exception $exception) {
             $errors = Validator::flatten($exception);
 
             $this->assertEquals('The value must be at least 4 characters.', Arr::first($errors));

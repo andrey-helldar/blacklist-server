@@ -36,9 +36,8 @@ class CheckTest extends TestCase
             'type'  => 'url',
         ]);
 
-        $result->assertStatus(422);
-        $result->assertJsonStructure(['error' => ['code', 'msg'], 'request' => ['value', 'type']]);
-        $result->assertSee('You are trying to block yourself!');
+        $result->assertStatus(200);
+        $result->assertSee('ok');
     }
 
     public function testSuccessNotExists()

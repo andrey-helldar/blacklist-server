@@ -19,17 +19,20 @@ class ValidationService
     /**
      * @param array $data
      * @param bool $is_require_type
+     * @param bool $check_self_blocking
      *
      * @throws ExcludedBlockingDetectedException
      * @throws SelfBlockingException
      * @throws \Helldar\BlacklistCore\Exceptions\UnknownTypeException
      */
-    public function validate(array $data, bool $is_require_type = true)
+    public function validate(array $data, bool $is_require_type = true, bool $check_self_blocking = false)
     {
         $value = Arr::get($data, 'value');
 
-        $this->validateSelfBlocking($value);
-        $this->validateExcludedBlocking($value);
+        if ($check_self_blocking) {
+            $this->validateSelfBlocking($value);
+            $this->validateExcludedBlocking($value);
+        }
 
         $this->make($data, $is_require_type)
             ->validate();
@@ -39,9 +42,9 @@ class ValidationService
      * @param array $data
      * @param bool $is_require_type
      *
+     * @return \Illuminate\Contracts\Validation\Validator
      * @throws \Helldar\BlacklistCore\Exceptions\UnknownTypeException
      *
-     * @return \Illuminate\Contracts\Validation\Validator
      */
     public function make(array $data, bool $is_require_type = true): ValidatorContract
     {
@@ -71,9 +74,9 @@ class ValidationService
      * @param string|null $type
      * @param bool $is_require_type
      *
+     * @return array
      * @throws \Helldar\BlacklistCore\Exceptions\UnknownTypeException
      *
-     * @return array
      */
     private function getValueRules(string $type = null, bool $is_require_type = true): array
     {
