@@ -1,46 +1,52 @@
-preset: psr2
+preset: psr12
+
+risky: true
 
 enabled:
     - align_double_arrow
     - align_equals
     - align_phpdoc
+    - alpha_ordered_imports
     - binary_operator_spaces
-    - blank_line_after_opening_tag
     - blank_line_before_continue
     - blank_line_before_declare
     - blank_line_before_return
     - blank_line_before_throw
     - blank_line_before_try
     - cast_spaces
-    - compact_nullable_typehint
-    - concat_with_spaces
+    - combine_consecutive_issets
     - const_separation
-    - ereg_to_preg
-    - extra_empty_lines
-    - is_null
-    - lowercase_cast
-    - mb_str_functions
+    - dir_constant
+    - fully_qualified_strict_types
+    - logical_operators
     - method_separation
-    - no_empty_lines_after_phpdocs
+    - no_alias_functions
+    - no_blank_lines_after_phpdoc
+    - no_blank_lines_between_traits
+    - no_empty_comment
     - no_empty_phpdoc
+    - no_extra_block_blank_lines
+    - no_extra_consecutive_blank_lines
+    - no_short_bool_cast
+    - no_trailing_comma_in_singleline_array
+    - no_unneeded_control_parentheses
     - no_unused_imports
-    - no_useless_else
-    - no_whitespace_before_comma_in_array
-    - no_whitespace_in_blank_line
-    - non_printable_character
-    - normalize_index_brace
-    - not_operator_with_successor_space
-    - object_operator_without_whitespace
+    - ordered_class_elements
+    - php_unit_construct
+    - php_unit_fqcn_annotation
     - phpdoc_indent
     - phpdoc_inline_tag
+    - phpdoc_link_to_see
     - phpdoc_no_access
     - phpdoc_no_empty_return
     - phpdoc_no_package
+    - phpdoc_no_useless_inheritdoc
     - phpdoc_order
+    - phpdoc_property
     - phpdoc_return_self_reference
     - phpdoc_scalar
     - phpdoc_separation
-    - phpdoc_single_line_var_spacing
+    - phpdoc_summary
     - phpdoc_to_comment
     - phpdoc_trim
     - phpdoc_type_to_var
@@ -48,21 +54,14 @@ enabled:
     - phpdoc_types_order
     - phpdoc_var_without_name
     - property_separation
-    - random_api_migration
-    - return_type_declaration
     - self_accessor
     - short_array_syntax
-    - short_bool_cast
     - short_list_syntax
-    - short_scalar_cast
-    - single_blank_line_before_namespace
     - single_line_class_definition
+    - single_line_throw
     - single_quote
-    - spaces_after_semicolon
-    - standardize_not_equal
-    - ternary_spaces
+    - space_after_semicolon
+    - standardize_not_equals
     - ternary_to_null_coalescing
     - trailing_comma_in_multiline_array
     - trim_array_spaces
-    - unary_operator_spaces
-    - unneeded_control_parentheses
