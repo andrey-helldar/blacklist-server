@@ -2,6 +2,7 @@
 
 namespace Helldar\BlacklistServer\Http\Controllers;
 
+use function api_response;
 use Exception;
 use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
 use Helldar\BlacklistServer\Facades\Blacklist;
@@ -12,10 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
-use function api_response;
 use function is_array;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends Controller
 {

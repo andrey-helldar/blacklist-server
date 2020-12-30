@@ -2,6 +2,7 @@
 
 namespace Helldar\BlacklistServer\Services;
 
+use function filter_var;
 use Helldar\BlacklistCore\Constants\Rules;
 use Helldar\BlacklistCore\Constants\Server;
 use Helldar\BlacklistCore\Constants\Types;
@@ -12,9 +13,8 @@ use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
-use function filter_var;
+use Illuminate\Validation\ValidationException;
 use function parse_url;
 
 class ValidationService

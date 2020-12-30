@@ -21,8 +21,8 @@ class ExistsTest extends TestCase
         $resultTrue  = Blacklist::exists($this->exists);
         $resultFalse = Blacklist::exists($this->not_exists);
 
-        $this->assertEquals(true, $resultTrue);
-        $this->assertEquals(false, $resultFalse);
+        $this->assertTrue($resultTrue);
+        $this->assertFalse($resultFalse);
     }
 
     public function testIncorrectArgument()
@@ -40,7 +40,7 @@ class ExistsTest extends TestCase
         $returnTrue  = Blacklist::exists($this->exists);
         $returnFalse = Blacklist::exists($this->not_exists);
 
-        $this->assertEquals(true, $returnTrue);
-        $this->assertEquals(false, $returnFalse);
+        $this->assertTrue($returnTrue);
+        $this->assertFalse($returnFalse);
     }
 }

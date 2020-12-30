@@ -33,21 +33,21 @@ class CheckTest extends TestCase
     {
         $result = Blacklist::check($this->not_exists);
 
-        $this->assertEquals(false, $result);
+        $this->assertFalse($result);
     }
 
     public function testSelfBlockingUrl()
     {
         Blacklist::check('http://localhost');
 
-        $this->assertEquals(true, true);
+        $this->assertTrue(true);
     }
 
     public function testSelfBlockingIp()
     {
         Blacklist::check('127.0.0.1');
 
-        $this->assertEquals(true, true);
+        $this->assertTrue(true);
     }
 
     public function testFailValidationException()
