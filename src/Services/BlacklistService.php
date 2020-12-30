@@ -2,13 +2,13 @@
 
 namespace Helldar\BlacklistServer\Services;
 
-use Helldar\BlacklistCore\Contracts\ServiceContract;
-use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
-use Helldar\BlacklistServer\Facades\Validator;
-use Helldar\BlacklistServer\Models\Blacklist;
-
 use function compact;
 use function config;
+use Helldar\BlacklistCore\Contracts\ServiceContract;
+use Helldar\BlacklistCore\Exceptions\BlacklistDetectedException;
+
+use Helldar\BlacklistServer\Facades\Validator;
+use Helldar\BlacklistServer\Models\Blacklist;
 
 class BlacklistService implements ServiceContract
 {

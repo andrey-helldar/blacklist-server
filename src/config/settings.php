@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * Allow external routes?
      *
@@ -55,5 +54,4 @@ return [
      */
 
     'except' => [],
-
 ];
